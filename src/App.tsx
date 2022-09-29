@@ -100,6 +100,7 @@ export default function App() {
         const {zoom} = e.viewState;
         setZ(zoom)
       }}
+      maxBounds={[-50,-47,80,43]}
       reuseMaps={true}
     >
       <DeckGLOverlay layers={layers} interleaved={true} />
