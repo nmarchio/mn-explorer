@@ -94,6 +94,20 @@ export const generateColorFunc = (
   return (f: any) => findColorBin(accessor(f));
 };
 
+export const generateExplicitColorFunc = (
+  colorScale: {color:any, value:number}[],
+  column: string
+) => {
+  const findColorBin = (n: number) => {
+    for (let i = 0; i < colorScale.length; i++) {
+      if (n < colorScale[i].value) return colorScale[i].color;
+    }
+    return colorScale[colorScale.length - 1].color;
+  } 
+  const accessor = (d: any) => d.properties[column];
+  return (f: any) => findColorBin(accessor(f))
+}
+
 export const BgTileLayer = new TileLayer({
   id: "TileLayer",
   data: "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png",

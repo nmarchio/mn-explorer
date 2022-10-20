@@ -1,8 +1,10 @@
 import React from 'react';
 
-export const ColorRange: React.FC<{ colorFunction: (f: any) => number[], colorDomain: [number, number], property: string }> = ({ colorFunction, colorDomain, property }) => {
-  const rangeIncrement = (colorDomain[1] - colorDomain[0]) / 9;
-  const range = [colorDomain[0], ...(Array.from({ length: 9 }, (_, i) => colorDomain[0] + i * rangeIncrement))];
+export const ColorRange: React.FC<{
+  colorScale: {color: number[], label: string}[]
+}> = ({
+  colorScale
+})=> {
   return (
     <div style={{
       display: 'flex',
@@ -14,11 +16,11 @@ export const ColorRange: React.FC<{ colorFunction: (f: any) => number[], colorDo
         flexDirection: 'column',
         justifyContent: 'space-between'
       }}>
-        {range.map((r, i) => (
+        {colorScale.map((c, i) => (
           <div key={i} style={{
             width: '10px',
             height: '10px',
-            background: `rgb(${colorFunction({ properties: { [property]: r } }).join(',')})`
+            background: `rgb(${c.color.join(',')}`
           }}></div>
         ))}
       </div>
@@ -27,8 +29,8 @@ export const ColorRange: React.FC<{ colorFunction: (f: any) => number[], colorDo
         flexDirection: 'column',
         justifyContent: 'space-between'
       }}>
-        {range.map((r, i) => (
-          (i === 0 || i % 2 === 0) ? <p key={i} style={{ margin: '0 .5em' }}>{formatNumber(r)}</p> : null
+        {colorScale.map((r, i) => (
+          <p key={i} style={{ margin: '0 .5em' }}>{r.label}</p>
         ))
         }
       </div>
