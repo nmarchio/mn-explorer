@@ -118,12 +118,11 @@ const kcomplexityColorScheme = [
     color: toRgb("FCD860"),
     label: "10+",
   },
-
-  {
-    value: 999,
-    color: toRgb("F9F871"),
-    label: "Off Network+",
-  },
+  // {
+  //   value: 999,
+  //   color: toRgb("F9F871"),
+  //   label: "Off Network+",
+  // },
 ];
 
 export default function App() {
