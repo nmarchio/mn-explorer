@@ -240,7 +240,7 @@ export default function App() {
         </h1>
         <p>
           <a href="https://miurban.uchicago.edu/">
-            Mansueto Institute for Urban InnovationUniversity of Chicago
+            Mansueto Institute for Urban Innovation :: University of Chicago
           </a>
         </p>
       </div>
