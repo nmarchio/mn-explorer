@@ -163,6 +163,7 @@ export default function App() {
       lineWidthMinPixels: 1,
       pickable: true,
       tileSize: 256,
+      // @ts-ignore
       beforeId: "waterway-shadow",
       updateTriggers: {
         stroked: z,
