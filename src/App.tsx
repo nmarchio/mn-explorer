@@ -34,7 +34,8 @@ const loadOptions = {
       typeof navigator !== "undefined" ? navigator.hardwareConcurrency - 1 : 3,
     maxMobileConcurrency:
       typeof navigator !== "undefined" ? navigator.hardwareConcurrency - 1 : 3,
-  },
+    workerUrl: "https://unpkg.com/@maticoapp/deck.gl-pmtiles@0.0.14/dist/pmt-worker.js"
+  }
 };
 const colors = [
   "#E8E7F4",
