@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import DeckGL from "@deck.gl/react/typed";
 import { PMTLayer } from "@maticoapp/deck.gl-pmtiles";
 import { MapboxOverlay, MapboxOverlayProps } from "@deck.gl/mapbox/typed";
@@ -11,12 +11,20 @@ import {
   BgTileLayer,
   INITIAL_VIEW_STATE,
   generateExplicitColorFunc,
+  generateLabeledColorFunc,
 } from "./utils";
 import { ColorRange } from "./ColorRange";
 import "mapbox-gl/dist/mapbox-gl.css";
-
+import { Deck } from "@deck.gl/core/typed";
+import maplibre from "maplibre-gl";
+import { mapVariables } from "./MapVariables";
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 
+const REGION_URL =
+  "https://d386ho3t0q1oea.cloudfront.net/region_map-2-10.pmtiles";
+const BLOCK_URL =
+  "https://d386ho3t0q1oea.cloudfront.net/africa_map-9-14_simp3.pmtiles";
+  
 function DeckGLOverlay(
   props: MapboxOverlayProps & {
     interleaved?: boolean;
@@ -127,68 +135,73 @@ const kcomplexityColorScheme = [
 ];
 
 export default function App() {
+  const [variable, setVariable] = useState(mapVariables[0].name);
   const [tileContent, setTileContent] = useState({});
   const [z, setZ] = useState(INITIAL_VIEW_STATE.zoom);
   const zTransitionLevel = 7;
   const numZfade = 4;
   const colorScale = "warm";
+  
+  const currSchema = useMemo(() => mapVariables.find(v => v.name === variable) || mapVariables[0], [variable]);
 
-  const regionsColorFunc = generateExplicitColorFunc(
-    kcomplexityColorScheme,
-    "k_complexity_landscan_un"
-  );
-  const blocksColorFunc = generateExplicitColorFunc(
-    kcomplexityColorScheme,
-    "k_complexity"
-  );
-  const zInterpolation = useMemo(
-    () => Math.max(0, Math.min((z - zTransitionLevel) / numZfade, 1)),
-    [z, zTransitionLevel, numZfade]
-  );
+  const blocksColorFunc = useCallback(generateLabeledColorFunc(
+    currSchema.colorMapping,
+    currSchema.columnAccessors.blocks
+  ), [currSchema])
+
+  
+  const regionsColorFunc = useCallback(generateLabeledColorFunc(
+    currSchema.colorMapping,
+    currSchema.columnAccessors.region
+  ), [currSchema])
+  // console.log(blocksColorFunc({'1'))
 
   const layers = [
     new PMTLayer({
       id: "regions-0-10-zoom",
-      data: "https://d386ho3t0q1oea.cloudfront.net/regions.pmtiles",
+      data: REGION_URL,
       onHover: ({ object }) => {
         setTileContent(object ? object : {});
       },
+      minZoom: 2,
       maxZoom: 10,
-      minZoom: 0,
       filled: true,
-      //@ts-ignore
-      getFillColor: regionsColorFunc,
+      getFillColor: d => {
+        const c = regionsColorFunc(d)
+        return c
+      },
       stroked: true,
-      getLineColor: z > 7 ? [40, 40, 40, zInterpolation * 255] : [0, 0, 0, 0],
+      getLineColor: z > 9 ? [40, 40, 40, 255] : [0, 0, 0, 0],
       lineWidthMinPixels: 1,
       pickable: true,
       tileSize: 256,
       // @ts-ignore
-      beforeId: "waterway-shadow",
+      // beforeId: "waterway-shadow",
       updateTriggers: {
         stroked: z,
         filled: z,
+        getFillColor: [regionsColorFunc],
       },
       loadOptions,
     }),
     new PMTLayer({
-      id: "blocks-8-14-zoom",
-      data: "https://d386ho3t0q1oea.cloudfront.net/block_8_14.pmtiles",
+      id: "blocks-9-14-zoom",
+      data: BLOCK_URL,
       onHover: ({ object }) => {
         setTileContent(object ? object : {});
       },
       // autoHighlight: true,
+      minZoom: 10,
       maxZoom: 14,
-      minZoom: 8,
       //@ts-ignore
-      getFillColor: (v) => [...blocksColorFunc(v), 255 * zInterpolation],
+      getFillColor: blocksColorFunc,
       lineWidthMinPixels: 1,
       pickable: true,
       stroked: false,
       tileSize: 256,
       beforeId: "waterway-shadow",
       updateTriggers: {
-        getFillColor: zInterpolation,
+        getFillColor: [blocksColorFunc],
       },
       loadOptions,
     }),
@@ -196,21 +209,26 @@ export default function App() {
 
   return (
     <div style={{ width: "100vw", height: "100vh", padding: 0, margin: 0 }}>
-      <Map
+      <DeckGL
         initialViewState={INITIAL_VIEW_STATE}
+        controller={true}
+        layers={layers}
+        onViewStateChange={(e) => {
+          const { zoom } = e.viewState;
+          setZ(Math.round(zoom));
+        }}
+        >
+          
+      <Map
         mapStyle="mapbox://styles/dhalpern/cl8n48kzu000a15p9o8z7wjmb"
         mapboxAccessToken={MAPBOX_TOKEN}
-        hash={true}
-        onMoveEnd={(e) => {
-          const { zoom } = e.viewState;
-          setZ(zoom);
-        }}
         maxBounds={[-50, -47, 80, 43]}
         reuseMaps={true}
       >
-        <DeckGLOverlay layers={layers} interleaved={true} />
         <NavigationControl />
       </Map>
+        </DeckGL>
+
       {!!Object.keys(tileContent) && (
         <pre
           style={{
@@ -236,13 +254,22 @@ export default function App() {
         }}
       >
         <h1 style={{ margin: "0 0 .5em 0", padding: 0 }}>
-          Million Neighborhoods Data Explorer
+          Million Neighborhoods Data Explorer {z}
         </h1>
         <p>
           <a href="https://miurban.uchicago.edu/">
             Mansueto Institute for Urban Innovation :: University of Chicago
           </a>
         </p>
+        <br/>
+        <hr/>
+        <br/>
+        <label id="variable-label">Choose a variable:</label>
+        <select aria-labelledby="variable-label">
+          {mapVariables.map(f=> (
+            <option value={f.name}>{f.name}</option>
+          ))}
+        </select>
       </div>
 
       <div
@@ -256,7 +283,7 @@ export default function App() {
       >
         <h3 style={{ margin: "0 0 .5em 0", padding: 0 }}>K Complexity</h3>
         {/* @ts-ignore */}
-        <ColorRange colorScale={kcomplexityColorScheme} />
+        <ColorRange colorScale={currSchema.colorMapping} />
       </div>
     </div>
   );

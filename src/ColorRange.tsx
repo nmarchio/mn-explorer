@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const ColorRange: React.FC<{
-  colorScale: {color: number[], label: string}[]
+  colorScale: {value: number[]}
 }> = ({
   colorScale
 })=> {
@@ -16,11 +16,11 @@ export const ColorRange: React.FC<{
         flexDirection: 'column',
         justifyContent: 'space-between'
       }}>
-        {colorScale.map((c, i) => (
+        {Object.entries(colorScale).map(([key, color], i) => (
           <div key={i} style={{
             width: '10px',
             height: '10px',
-            background: `rgb(${c.color.join(',')}`
+            background: `rgb(${color.join(',')}`
           }}></div>
         ))}
       </div>
@@ -29,8 +29,8 @@ export const ColorRange: React.FC<{
         flexDirection: 'column',
         justifyContent: 'space-between'
       }}>
-        {colorScale.map((r, i) => (
-          <p key={i} style={{ margin: '0 .5em' }}>{r.label}</p>
+      {Object.entries(colorScale).map(([key, color], i) => (
+          <p key={i} style={{ margin: '0 .5em' }}>{key}</p>
         ))
         }
       </div>

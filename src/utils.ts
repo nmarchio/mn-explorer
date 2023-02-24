@@ -94,36 +94,10 @@ export const generateColorFunc = (
   return (f: any) => findColorBin(accessor(f));
 };
 
-export const generateExplicitColorFunc = (
-  colorScale: {color:any, value:number}[],
+export const generateLabeledColorFunc = (
+  colorScale: {[value: string | number]: number[]},
   column: string
 ) => {
-  const findColorBin = (n: number) => {
-    for (let i = 0; i < colorScale.length; i++) {
-      if (n < colorScale[i].value) return colorScale[i].color;
-    }
-    return colorScale[colorScale.length - 1].color;
-  } 
   const accessor = (d: any) => d.properties[column];
-  return (f: any) => findColorBin(accessor(f))
+  return (f: any) => colorScale[accessor(f)];
 }
-
-export const BgTileLayer = new TileLayer({
-  id: "TileLayer",
-  data: "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png",
-  maxZoom: 19,
-  minZoom: 0,
-  renderSubLayers: (props) => {
-    const {
-      // @ts-ignore
-      bbox: { west, south, east, north },
-    } = props.tile;
-
-    return new BitmapLayer(props, {
-      data: null,
-      image: props.data,
-      bounds: [west, south, east, north],
-    });
-  },
-  pickable: true,
-});
