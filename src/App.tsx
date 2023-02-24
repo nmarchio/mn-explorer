@@ -7,10 +7,10 @@ import Map, { NavigationControl, useControl } from "react-map-gl";
 import { Config } from "./config";
 import {
   ConfigSpec,
-  generateColorFunc,
-  BgTileLayer,
+  // generateColorFunc,
+  // BgTileLayer,
   INITIAL_VIEW_STATE,
-  generateExplicitColorFunc,
+  // generateExplicitColorFunc,
   generateLabeledColorFunc,
 } from "./utils";
 import { ColorRange } from "./ColorRange";
@@ -141,7 +141,7 @@ export default function App() {
   const zTransitionLevel = 7;
   const numZfade = 4;
   const colorScale = "warm";
-  
+  // @ts-ignore
   const currSchema = useMemo(() => mapVariables.find(v => v.name === variable) || mapVariables[0], [variable]);
 
   const blocksColorFunc = useCallback(generateLabeledColorFunc(
@@ -166,6 +166,7 @@ export default function App() {
       minZoom: 2,
       maxZoom: 10,
       filled: true,
+      // @ts-ignore
       getFillColor: d => {
         const c = regionsColorFunc(d)
         return c

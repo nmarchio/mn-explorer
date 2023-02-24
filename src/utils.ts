@@ -61,38 +61,39 @@ export const INITIAL_VIEW_STATE = {
 };
 
 const defaultColorFunc = (_f: any) => [120, 120, 120];
-export const generateColorFunc = (
-  colorScale?: keyof typeof colorSchemeMapping,
-  colorDomain?: [number, number],
-  property?: string
-) => {
-  if (!colorScale || !colorDomain || !property) return defaultColorFunc;
 
-  const colorFunc =
-    colorSchemeMapping[
-      colorScale.toLocaleLowerCase() as keyof typeof colorSchemeMapping
-    ];
-  if (!colorFunc) return defaultColorFunc;
+// export const generateColorFunc = (
+//   colorScale?: keyof typeof colorSchemeMapping,
+//   colorDomain?: [number, number],
+//   property?: string
+// ) => {
+//   if (!colorScale || !colorDomain || !property) return defaultColorFunc;
 
-  const colorScaleFunc = d3.scaleSequential(colorFunc).domain(colorDomain);
-  const increment = (colorDomain[1] - colorDomain[0]) / 9;
-  const values = (new Array(9).fill(0) as number[]).map(
-    (_, i) => Math.round(colorDomain[0] + increment * (i+1) * 100) / 100
-  );
-  const colors = values.map((v: number)=> colorScaleFunc(v)
-    .slice(4, -1)
-    .split(",")
-    .map((v: string) => parseInt(v))
-  );
-  const accessor = (d: any) => d.properties[property];
-  const findColorBin = (n: number) => {
-    for (let i = 0; i < values.length; i++) {
-      if (n < values[i]) return colors[i];
-    }
-    return colors[colors.length - 1];
-  } 
-  return (f: any) => findColorBin(accessor(f));
-};
+//   const colorFunc =
+//     colorSchemeMapping[
+//       colorScale.toLocaleLowerCase() as keyof typeof colorSchemeMapping
+//     ];
+//   if (!colorFunc) return defaultColorFunc;
+
+//   const colorScaleFunc = d3.scaleSequential(colorFunc).domain(colorDomain);
+//   const increment = (colorDomain[1] - colorDomain[0]) / 9;
+//   const values = (new Array(9).fill(0) as number[]).map(
+//     (_, i) => Math.round(colorDomain[0] + increment * (i+1) * 100) / 100
+//   );
+//   const colors = values.map((v: number)=> colorScaleFunc(v)
+//     .slice(4, -1)
+//     .split(",")
+//     .map((v: string) => parseInt(v))
+//   );
+//   const accessor = (d: any) => d.properties[property];
+//   const findColorBin = (n: number) => {
+//     for (let i = 0; i < values.length; i++) {
+//       if (n < values[i]) return colors[i];
+//     }
+//     return colors[colors.length - 1];
+//   } 
+//   return (f: any) => findColorBin(accessor(f));
+// };
 
 export const generateLabeledColorFunc = (
   colorScale: {[value: string | number]: number[]},
