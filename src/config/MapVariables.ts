@@ -19,7 +19,41 @@ const kComplexitySchema: MapVariableSchema = {
   },
 };
 
-const variables: Array<MapVariableSchema> = [kComplexitySchema];
+const BlockTypeSchema: MapVariableSchema = {
+  name: "Block Type",
+  description: "The typography of the block as urban, peri-urban, or non-urban.",
+  columnAccessors: {
+    region: "k_ls_labels",
+    blocks: "area_type",
+  },
+  colorMapping: {
+    "Urban": "#5a5f68",
+    "Peri-urban": "#9aaac7",
+    "Non-urban": "#c5e6a4",
+  },
+};
+
+const PopulationSchema: MapVariableSchema = {
+  name: "Population Density",
+  description: "Population density of the block.",
+  columnAccessors: {
+    region: "landscan_population_un_density_hectare",
+    blocks: "landscan_population_un_density_hectare",
+  },
+  numericRange: true,
+  colorMapping: {
+    1:'#FCFFFC',
+    5:'#F0F0E4',
+    10:'#D6D5D3',
+    20:'#B1B8C7',
+    40:'#8C9BA5',
+    100:'#5C6D7E',
+    200:'#34495E',
+    300:'#00204C',
+  }
+};
+
+const variables: Array<MapVariableSchema> = [kComplexitySchema, BlockTypeSchema,PopulationSchema];
 
 export const mapVariables = variables.map((schema) => ({
   ...schema,
@@ -51,6 +85,7 @@ export type MapVariableSchema = {
     region: string;
     blocks: string;
   };
+  numericRange?: boolean;
   colorMapping: {
     [value: string | number]: string;
   };

@@ -1,23 +1,37 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect, useLayoutEffect } from "react";
 import DeckGL from "@deck.gl/react/typed";
 import { PMTLayer } from "@maticoapp/deck.gl-pmtiles";
+import {ScatterplotLayer} from '@deck.gl/layers/typed';
 import { MapboxOverlay, MapboxOverlayProps } from "@deck.gl/mapbox/typed";
 //@ts-ignore
 import Map, { NavigationControl, useControl } from "react-map-gl";
 import { Config } from "./config";
 import {
   ConfigSpec,
-  // generateColorFunc,
+  generateColorFunc,
   // BgTileLayer,
   INITIAL_VIEW_STATE,
   // generateExplicitColorFunc,
-  generateLabeledColorFunc,
+  // generateLabeledColorFunc,
 } from "./utils";
 import { ColorRange } from "./ColorRange";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { Deck } from "@deck.gl/core/typed";
 import maplibre from "maplibre-gl";
-import { mapVariables } from "./MapVariables";
+import { mapVariables } from "./config/MapVariables";
+import { Tooltip, useTooltipStore } from "./Tooltip";
+import { tooltipColumns } from "./config/TooltipColumns";
+import type {PickingInfo } from '@deck.gl/core/typed';
+
+function DeckGLOverlay(props: MapboxOverlayProps & {
+  interleaved?: boolean;
+}) {
+  const overlay = useControl<MapboxOverlay>(() => new MapboxOverlay(props));
+  overlay.setProps(props);
+  return null;
+}
+
+
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
 
 const REGION_URL =
@@ -25,15 +39,6 @@ const REGION_URL =
 const BLOCK_URL =
   "https://d386ho3t0q1oea.cloudfront.net/africa_map-9-14_simp3.pmtiles";
   
-function DeckGLOverlay(
-  props: MapboxOverlayProps & {
-    interleaved?: boolean;
-  }
-) {
-  const overlay = useControl<MapboxOverlay>(() => new MapboxOverlay(props));
-  overlay.setProps(props);
-  return null;
-}
 
 const loadOptions = {
   pmt: {
@@ -141,28 +146,33 @@ export default function App() {
   const zTransitionLevel = 7;
   const numZfade = 4;
   const colorScale = "warm";
+  const setTooltipInfo = useTooltipStore(state => state.setTooltipInfo);
   // @ts-ignore
   const currSchema = useMemo(() => mapVariables.find(v => v.name === variable) || mapVariables[0], [variable]);
 
-  const blocksColorFunc = useCallback(generateLabeledColorFunc(
+  const blocksColorFunc = useCallback(generateColorFunc(
     currSchema.colorMapping,
-    currSchema.columnAccessors.blocks
+    currSchema.columnAccessors.blocks,
+    currSchema.numericRange
   ), [currSchema])
 
   
-  const regionsColorFunc = useCallback(generateLabeledColorFunc(
+  const regionsColorFunc = useCallback(generateColorFunc(
     currSchema.colorMapping,
-    currSchema.columnAccessors.region
+    currSchema.columnAccessors.region,
+    currSchema.numericRange
   ), [currSchema])
-  // console.log(blocksColorFunc({'1'))
+  
+  const handleTooltipInfo = (info: PickingInfo) => {
+    console.log(info?.object?.properties)
+    info && setTooltipInfo(info)
+  }
 
   const layers = [
     new PMTLayer({
       id: "regions-0-10-zoom",
       data: REGION_URL,
-      onHover: ({ object }) => {
-        setTileContent(object ? object : {});
-      },
+      onHover: handleTooltipInfo,
       minZoom: 2,
       maxZoom: 10,
       filled: true,
@@ -184,13 +194,12 @@ export default function App() {
         getFillColor: [regionsColorFunc],
       },
       loadOptions,
+      beforeId: "waterway-shadow"
     }),
     new PMTLayer({
       id: "blocks-9-14-zoom",
       data: BLOCK_URL,
-      onHover: ({ object }) => {
-        setTileContent(object ? object : {});
-      },
+      onHover: handleTooltipInfo,
       // autoHighlight: true,
       minZoom: 10,
       maxZoom: 14,
@@ -200,25 +209,16 @@ export default function App() {
       pickable: true,
       stroked: false,
       tileSize: 256,
-      beforeId: "waterway-shadow",
       updateTriggers: {
         getFillColor: [blocksColorFunc],
       },
       loadOptions,
+      beforeId: "waterway-shadow"
     }),
   ];
 
   return (
     <div style={{ width: "100vw", height: "100vh", padding: 0, margin: 0 }}>
-      <DeckGL
-        initialViewState={INITIAL_VIEW_STATE}
-        controller={true}
-        layers={layers}
-        onViewStateChange={(e) => {
-          const { zoom } = e.viewState;
-          setZ(Math.round(zoom));
-        }}
-        >
           
       <Map
         mapStyle="mapbox://styles/dhalpern/cl8n48kzu000a15p9o8z7wjmb"
@@ -226,9 +226,20 @@ export default function App() {
         maxBounds={[-50, -47, 80, 43]}
         reuseMaps={true}
       >
+
+      <DeckGLOverlay layers={layers} interleaved={true} />
+      {/* <DeckGL
+        initialViewState={INITIAL_VIEW_STATE}
+        controller={true}
+        layers={layers}
+        onViewStateChange={(e) => {
+          const { zoom } = e.viewState;
+          setZ(Math.round(zoom));
+        }}
+        /> */}
         <NavigationControl />
       </Map>
-        </DeckGL>
+        {/* </DeckGL> */}
 
       {!!Object.keys(tileContent) && (
         <pre
@@ -266,7 +277,7 @@ export default function App() {
         <hr/>
         <br/>
         <label id="variable-label">Choose a variable:</label>
-        <select aria-labelledby="variable-label">
+        <select aria-labelledby="variable-label" onChange={e => setVariable(e.target.value)}>
           {mapVariables.map(f=> (
             <option value={f.name}>{f.name}</option>
           ))}
@@ -282,8 +293,9 @@ export default function App() {
           padding: "1em",
         }}
       >
-        <h3 style={{ margin: "0 0 .5em 0", padding: 0 }}>K Complexity</h3>
+        <h3 style={{ margin: "0 0 .5em 0", padding: 0 }}>{currSchema.name}</h3>
         {/* @ts-ignore */}
+        <Tooltip columns={tooltipColumns} />
         <ColorRange colorScale={currSchema.colorMapping} />
       </div>
     </div>

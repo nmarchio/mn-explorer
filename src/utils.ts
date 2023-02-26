@@ -1,6 +1,7 @@
 import { BitmapLayer } from "@deck.gl/layers/typed";
 import { TileLayer } from "@deck.gl/geo-layers/typed";
 import * as d3 from "d3";
+import { MapVariableSchema } from "./config/MapVariables";
 
 export const colorSchemeMapping = {
   brbg: d3.interpolateBrBG,
@@ -95,10 +96,33 @@ const defaultColorFunc = (_f: any) => [120, 120, 120];
 //   return (f: any) => findColorBin(accessor(f));
 // };
 
+export const generateColorFunc = (colorSchema: any, column: string, numericRange?: boolean) => {
+  if (numericRange) {
+    return generateRangeColorFunc(colorSchema, column);
+  } else {
+    return generateLabeledColorFunc(colorSchema, column);
+  }
+}
+export const generateRangeColorFunc = (
+  colorScale: {[value: string | number]: number[]},
+  column: string
+) => {
+  const accessor = (d: any) => d.properties[column];
+  const entries = Object.entries(colorScale);
+  return (f: any) => {
+    const value = accessor(f);
+    if (value === null || value === undefined) return [0,0,0,0];
+    if (value > entries[entries.length-1][0]) return entries[entries.length-1][1];
+    for (let i=0; i<entries.length; i++) {
+      if (value <= entries[i][0]) return entries[i][1];
+    }
+    return [0,0,0,0];
+  }
+}
 export const generateLabeledColorFunc = (
   colorScale: {[value: string | number]: number[]},
   column: string
 ) => {
   const accessor = (d: any) => d.properties[column];
-  return (f: any) => colorScale[accessor(f)];
+  return (f: any) => colorScale?.[accessor(f)] || [0,0,0,0];
 }
