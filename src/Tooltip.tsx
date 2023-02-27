@@ -23,10 +23,7 @@ export function Tooltip({ columns }: { columns: Array<TooltipSchema> }) {
   if (x === undefined || x===-1 || !properties) return null
 
   return (
-    <div style={{
-      position:'fixed',
-      pointerEvents: 'none',
-      background:'white',
+    <div className="tooltip" style={{
       [directionX]: posX,
       [directionY]: posY
     }}>

@@ -202,7 +202,7 @@ export default function App() {
       onHover: handleTooltipInfo,
       // autoHighlight: true,
       minZoom: 10,
-      maxZoom: 14,
+      maxZoom: 13,
       //@ts-ignore
       getFillColor: blocksColorFunc,
       lineWidthMinPixels: 1,
