@@ -7,3 +7,25 @@ body, * {
 h1, h2, h3, h4, h5, h6, p {
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+
+.tooltip-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    max-width:20rem;
+}
+.tooltip-table tr td {
+    word-break: break-word;
+}
+
+.tooltip-table tr:nth-of-type(even){
+    background-color: #f2f2f2;
+}
+.tooltip-table tr td:nth-child(1) {
+    max-width: 14ch;
+    padding:0.25rem 0 0.25rem 0.5rem;
+}
+
+.tooltip-table tr td:nth-child(2) {
+    padding:0.25rem 0.5rem 0.25rem 0;
+}

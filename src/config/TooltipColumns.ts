@@ -10,19 +10,43 @@ export const tooltipColumns: Array<TooltipSchema> = [
     label: "Country",
   },
   {
-    column: "area_type",
-    label: "Area Type"
-  },
-  {
-    column: "block_id",
-    label: "Block ID"
-  },
-  {
     column: "agglosname",
     label: "Agglomeration"
   },
   {
+    column: "area_type",
+    label: "Block Type"
+  },
+  {
     column: "k_complexity",
     label: "Block Complexity",
-  }
+  },
+  {
+    column: "landscan_population_un",
+    label: "Population",
+    format: (v:number) => Math.round(v)+''
+  },
+  {
+    column: "landscan_population_un_density_hectare",
+    label: "Population Density (p/ha)",
+    format: (v:number) => Math.round(v*100)/100+''
+  },
+  {
+    column: "landscan_population_un_density_hectare_log",
+    label: "Population Density (log)",
+    format: (v:number) => Math.round(v*100)/100+''
+  },
+  {
+    column: "block_hectares",
+    label: "Area (ha)",
+    format: (v:number) => Math.round(v*100)/100+''
+  },
+  {
+    column: "block_geohash",
+    label: "Geohash"
+  },
+  {
+    column: "block_id",
+    label: "ID"
+  },
 ]
