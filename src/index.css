@@ -25,6 +25,7 @@ h1, h2, h3, h4, h5, h6, p {
 
 .tooltip-table tr:nth-of-type(even){
     background-color: #f2f2f2;
+    backdrop-filter: blur(10px);
 }
 .tooltip-table tr td:nth-child(1) {
     max-width: 14ch;
