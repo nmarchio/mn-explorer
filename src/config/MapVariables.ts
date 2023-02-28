@@ -40,7 +40,7 @@ const PopulationSchema: MapVariableSchema = {
     region: "landscan_population_un_density_hectare",
     blocks: "landscan_population_un_density_hectare",
   },
-  numericRange: true,
+  rangeType: "unclassified",
   colorMapping: {
     1:'#FCFFFC',
     5:'#F0F0E4',
@@ -85,7 +85,7 @@ export type MapVariableSchema = {
     region: string;
     blocks: string;
   };
-  numericRange?: boolean;
+  rangeType?: "binned" | "unclassified" | undefined;
   colorMapping: {
     [value: string | number]: string;
   };

@@ -153,14 +153,14 @@ export default function App() {
   const blocksColorFunc = useCallback(generateColorFunc(
     currSchema.colorMapping,
     currSchema.columnAccessors.blocks,
-    currSchema.numericRange
+    currSchema.rangeType
   ), [currSchema])
 
   
   const regionsColorFunc = useCallback(generateColorFunc(
     currSchema.colorMapping,
     currSchema.columnAccessors.region,
-    currSchema.numericRange
+    currSchema.rangeType
   ), [currSchema])
   
   const handleTooltipInfo = (info: PickingInfo) => {

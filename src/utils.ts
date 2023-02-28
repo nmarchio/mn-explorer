@@ -1,57 +1,7 @@
 import { BitmapLayer } from "@deck.gl/layers/typed";
 import { TileLayer } from "@deck.gl/geo-layers/typed";
-import * as d3 from "d3";
+import {scaleLinear} from "d3-scale";
 import { MapVariableSchema } from "./config/MapVariables";
-
-export const colorSchemeMapping = {
-  brbg: d3.interpolateBrBG,
-  prgn: d3.interpolatePRGn,
-  piyg: d3.interpolatePiYG,
-  puor: d3.interpolatePuOr,
-  rdbu: d3.interpolateRdBu,
-  rdgy: d3.interpolateRdGy,
-  rdylbu: d3.interpolateRdYlBu,
-  rdylgn: d3.interpolateRdYlGn,
-  spectral: d3.interpolateSpectral,
-  blues: d3.interpolateBlues,
-  greens: d3.interpolateGreens,
-  greys: d3.interpolateGreys,
-  oranges: d3.interpolateOranges,
-  purples: d3.interpolatePurples,
-  reds: d3.interpolateReds,
-  turbo: d3.interpolateTurbo,
-  viridis: d3.interpolateViridis,
-  inferno: d3.interpolateInferno,
-  magma: d3.interpolateMagma,
-  plasma: d3.interpolatePlasma,
-  cividis: d3.interpolateCividis,
-  warm: d3.interpolateWarm,
-  cool: d3.interpolateCool,
-  cubehelixDefault: d3.interpolateCubehelixDefault,
-  rainbow: d3.interpolateRainbow,
-  sinebow: d3.interpolateSinebow,
-  bugn: d3.interpolateBuGn,
-  bupu: d3.interpolateBuPu,
-  gnbu: d3.interpolateGnBu,
-  orrd: d3.interpolateOrRd,
-  pubugn: d3.interpolatePuBuGn,
-  pubu: d3.interpolatePuBu,
-  purd: d3.interpolatePuRd,
-  rdpu: d3.interpolateRdPu,
-  ylgnbu: d3.interpolateYlGnBu,
-  ylgn: d3.interpolateYlGn,
-  ylorbr: d3.interpolateYlOrBr,
-  ylorrd: d3.interpolateYlOrRd,
-};
-
-export interface ConfigSpec {
-  filePath: string;
-  minZoom: number;
-  maxZoom: number;
-  colorScale?: keyof typeof colorSchemeMapping;
-  property?: string;
-  colorDomain?: [number, number];
-}
 
 export const INITIAL_VIEW_STATE = {
   longitude: 0,
@@ -96,8 +46,10 @@ const defaultColorFunc = (_f: any) => [120, 120, 120];
 //   return (f: any) => findColorBin(accessor(f));
 // };
 
-export const generateColorFunc = (colorSchema: any, column: string, numericRange?: boolean) => {
-  if (numericRange) {
+export const generateColorFunc = (colorSchema: any, column: string, rangeType?: string) => {
+  if (rangeType === "unclassified") {
+    return generateGradientColorFunc(colorSchema, column);
+  } else if (rangeType === "binned") {
     return generateRangeColorFunc(colorSchema, column);
   } else {
     return generateLabeledColorFunc(colorSchema, column);
@@ -119,10 +71,35 @@ export const generateRangeColorFunc = (
     return [0,0,0,0];
   }
 }
+
 export const generateLabeledColorFunc = (
   colorScale: {[value: string | number]: number[]},
   column: string
 ) => {
   const accessor = (d: any) => d.properties[column];
   return (f: any) => colorScale?.[accessor(f)] || [0,0,0,0];
+}
+
+export const generateGradientColorFunc = (
+  colorScale: {[value: string | number]: number[]},
+  column: string
+) => {
+  const accessor = (d: any) => d.properties[column];
+  const entries = Object.entries(colorScale);
+  const colorRange = entries.map((e: any) => `rgb(${e[1].join(",")})`);
+  const valueDomain = entries.map((e: any) => e[0]);
+  const colorScaleFunc = scaleLinear()
+    .domain([
+      -Math.pow(10,12),
+      ...valueDomain,
+      Math.pow(10,12)
+    ])
+    // @ts-ignore
+    .range([colorRange[0],...colorRange,colorRange[colorRange.length-1]]);
+  
+  return (f: any) => {
+    const color = colorScaleFunc(accessor(f))
+    // @ts-ignore
+    return color.slice(4, -1).split(",").map((v: string) => parseInt(v));
+  }
 }
