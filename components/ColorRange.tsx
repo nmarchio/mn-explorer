@@ -7,7 +7,7 @@ export const ColorRange: React.FC<{
   const len = Object.keys(colorScale).length - 1;
   const gradient = rangeType === "unclassified"
     ?  `linear-gradient(180deg, ${Object.values(colorScale).map((v, i) => `rgb(${v.join(',')}) ${Math.round(i / len * 100)}%`).join(', ')})`
-    : null;
+    : '';
   console.log(gradient)
   return (
     <div

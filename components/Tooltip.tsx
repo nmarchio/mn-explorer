@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { TooltipSchema } from "./config/TooltipColumns";
+import { TooltipSchema } from "@/config/TooltipColumns";
 import type {PickingInfo } from '@deck.gl/core/typed';
 
 export const useTooltipStore = create<{
@@ -12,9 +12,10 @@ export const useTooltipStore = create<{
 
 export function Tooltip({ columns }: { columns: Array<TooltipSchema> }) {
   const tooltipInfo = useTooltipStore((state) => state.tooltipInfo);
+  if (typeof window === "undefined") return null;
   const {x,y,object} = tooltipInfo
-  const directionX = typeof window !== "undefined" && x < window.innerWidth / 2 ? 'left' : 'right'
-  const directionY = typeof window !== "undefined" && y < window.innerHeight / 2 ? 'top' : 'bottom'
+  const directionX = x < window.innerWidth / 2 ? 'left' : 'right'
+  const directionY = y < window.innerHeight / 2 ? 'top' : 'bottom'
   const [posX, posY] = [
     directionX === 'left' ? x + 10 : window.innerWidth - x + 10,
     directionY === 'top' ? y + 10 : window.innerHeight - y + 10

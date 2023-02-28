@@ -251,21 +251,22 @@ export default function App() {
   ];
 
   return (
-    <div style={{ width: "100vw", height: "100vh", padding: 0, margin: 0 }}>
-      <Map
-        mapStyle={mapStyle}
-        mapboxAccessToken={MAPBOX_TOKEN}
-        maxBounds={[-50, -47, 80, 43]}
-        reuseMaps={true}
-        hash={true}
-        onMoveEnd={(e) => {
-          const z = e.viewState.zoom;
-          setZ(Math.round(z));
-        }}
-        attributionControl={false}
-      >
-        <DeckGLOverlay layers={layers} interleaved={true} />
-        {/* <DeckGL
+    <>
+      <div style={{ width: "100vw", height: "100vh", padding: 0, margin: 0 }}>
+        <Map
+          mapStyle={mapStyle}
+          mapboxAccessToken={MAPBOX_TOKEN}
+          maxBounds={[-50, -47, 80, 43]}
+          reuseMaps={true}
+          hash={true}
+          onMoveEnd={(e) => {
+            const z = e.viewState.zoom;
+            setZ(Math.round(z));
+          }}
+          attributionControl={false}
+        >
+          <DeckGLOverlay layers={layers} interleaved={true} />
+          {/* <DeckGL
         initialViewState={INITIAL_VIEW_STATE}
         controller={true}
         layers={layers}
@@ -274,106 +275,112 @@ export default function App() {
           setZ(Math.round(zoom));
         }}
         /> */}
-        <GeocoderControl
-          mapboxAccessToken={MAPBOX_TOKEN}
-          position="top-right"
-        />
-        <NavigationControl />
-        <AttributionControl
-          customAttribution={[
-            "© The University of Chicago",
-            "Data via Maxar Ecopia",
-          ]}
-        />
-      </Map>
-      {/* </DeckGL> */}
+          <GeocoderControl
+            mapboxAccessToken={MAPBOX_TOKEN}
+            position="top-right"
+          />
+          <NavigationControl />
+          <AttributionControl
+            customAttribution={[
+              "© The University of Chicago",
+              "Data via Maxar Ecopia",
+            ]}
+          />
+        </Map>
+        {/* </DeckGL> */}
 
-      {!!Object.keys(tileContent) && (
-        <pre
+        {!!Object.keys(tileContent) && (
+          <pre
+            style={{
+              position: "fixed",
+              top: 0,
+              right: 0,
+              background: "rgba(255,255,255,0.9)",
+              maxWidth: "300px",
+              padding: "1em",
+            }}
+          >
+            {JSON.stringify(tileContent, null, 2)}
+          </pre>
+        )}
+
+        <div
           style={{
             position: "fixed",
             top: 0,
-            right: 0,
+            left: 0,
             background: "rgba(255,255,255,0.9)",
-            maxWidth: "300px",
             padding: "1em",
           }}
         >
-          {JSON.stringify(tileContent, null, 2)}
-        </pre>
-      )}
+          <h1 style={{ margin: "0 0 .5em 0", padding: 0 }}>
+            Million Neighborhoods Data Explorer
+          </h1>
+          <p>
+            <a href="https://miurban.uchicago.edu/">
+              Mansueto Institute for Urban Innovation :: University of Chicago
+            </a>
+          </p>
+          <br />
+          <hr />
+          <br />
+          <label id="variable-label">Choose a variable:</label>
 
-      <div
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          background: "rgba(255,255,255,0.9)",
-          padding: "1em",
-        }}
-      >
-        <h1 style={{ margin: "0 0 .5em 0", padding: 0 }}>
-          Million Neighborhoods Data Explorer
-        </h1>
-        <p>
-          <a href="https://miurban.uchicago.edu/">
-            Mansueto Institute for Urban Innovation :: University of Chicago
-          </a>
-        </p>
-        <br />
-        <hr />
-        <br />
-        <label id="variable-label">Choose a variable:</label>
+          <select
+            aria-labelledby="variable-label"
+            onChange={(e) => setVariable(e.target.value)}
+          >
+            {mapVariables.map((f) => (
+              <option value={f.name} key={f.name}>
+                {f.name}
+              </option>
+            ))}
+          </select>
+          <br />
+          <br />
+          <p>Background map:</p>
+          <input
+            onChange={() => setShowSatellite(false)}
+            checked={!showSatellite}
+            type="radio"
+            value="Choropleth / Streets"
+          />
+          <label>Choropleth / Streets</label>
+          <br />
+          <input
+            onChange={() => setShowSatellite(true)}
+            checked={showSatellite}
+            type="radio"
+            value="Satellite"
+          />
+          <label>Satellite</label>
 
-        <select
-          aria-labelledby="variable-label"
-          onChange={(e) => setVariable(e.target.value)}
-        >
-          {mapVariables.map((f) => (
-            <option value={f.name} key={f.name}>{f.name}</option>
-          ))}
-        </select>
-        <br />
-        <br />
-        <p>Background map:</p>
-        <input
-          onChange={() => setShowSatellite(false)}
-          checked={!showSatellite}
-          type="radio"
-          value="Choropleth / Streets"
-        />
-        <label>Choropleth / Streets</label>
-        <br />
-        <input
-          onChange={() => setShowSatellite(true)}
-          checked={showSatellite}
-          type="radio"
-          value="Satellite"
-        />
-        <label>Satellite</label>
-
-        {/* <p style={{padding:'1rem'}}>
+          {/* <p style={{padding:'1rem'}}>
           {currSchema.description}
         </p> */}
-      </div>
+        </div>
 
-      <div
-        style={{
-          position: "fixed",
-          bottom: "2rem",
-          left: 0,
-          background: "rgba(255,255,255,0.9)",
-          padding: "1em",
-        }}
-      >
-        <h3 style={{ margin: "0 0 .5em 0", padding: 0 }}>{currSchema.name}</h3>
-        <Tooltip columns={tooltipColumns} />
-        <ColorRange
-        {/* @ts-ignore */}
-          colorScale={currSchema.colorMapping}
-          rangeType={currSchema.rangeType}
-        />
+        <div
+          style={{
+            position: "fixed",
+            bottom: "2rem",
+            left: 0,
+            background: "rgba(255,255,255,0.9)",
+            padding: "1em",
+          }}
+        >
+          <h3 style={{ margin: "0 0 .5em 0", padding: 0 }}>
+            {currSchema.name}
+          </h3>
+          <Tooltip columns={tooltipColumns} />
+          <ColorRange
+            // @ts-ignore
+            colorScale={currSchema.colorMapping}
+            // @ts-ignore
+            rangeType={currSchema.rangeType}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
