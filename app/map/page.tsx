@@ -163,6 +163,7 @@ export default function App() {
   const [tileContent, setTileContent] = useState({});
   const [z, setZ] = useState(INITIAL_VIEW_STATE.zoom);
   const [showSatellite, setShowSatellite] = useState(false);
+  const [layersLoaded, setLayersLoaded] = useState({});
   const zTransitionLevel = 7;
   const numZfade = 4;
   const colorScale = "warm";
@@ -172,6 +173,7 @@ export default function App() {
     () => mapVariables.find((v) => v.name === variable) || mapVariables[0],
     [variable]
   );
+
   const mapStyle = showSatellite ? styles.satellite : styles.streets;
   const blocksColorFunc = useCallback(
     generateColorFunc(
@@ -194,6 +196,13 @@ export default function App() {
   const handleTooltipInfo = (info: PickingInfo) => {
     console.log(info?.object?.properties);
     info && setTooltipInfo(info);
+  };
+
+  const setLayerLoaded = (layer: string) => {
+    setLayersLoaded((prev) => ({
+      ...prev,
+      [layer]: true,
+    }));
   };
 
   const layers = [
@@ -221,6 +230,7 @@ export default function App() {
         visible: [z, showSatellite],
         getFillColor: [regionsColorFunc],
       },
+      onViewportLoad: () => setLayerLoaded("regions-0-10-zoom"),
       loadOptions,
       beforeId: "waterway-shadow",
     }),
@@ -229,7 +239,7 @@ export default function App() {
       data: BLOCK_URL,
       onHover: handleTooltipInfo,
       autoHighlight: true,
-      autoHighlightColor: [255, 255, 255, 255],
+      highlightColor: [230, 230, 0, 255],
       // autoHighlight: true,
       minZoom: 10,
       maxZoom: 13,
@@ -241,6 +251,7 @@ export default function App() {
       tileSize: 256,
       visible: !showSatellite,
       opacity: choroplethOpacity,
+      onViewportLoad: () => setLayerLoaded("blocks-9-14-zoom"),
       updateTriggers: {
         getFillColor: [blocksColorFunc],
         visible: showSatellite,
@@ -249,10 +260,15 @@ export default function App() {
       beforeId: "waterway-shadow",
     }),
   ];
+  // @ts-ignore
+  const isLoaded = layers.every(({ id }) => layersLoaded[id]);
 
   return (
     <>
-      <div style={{ width: "100vw", height: "100vh", padding: 0, margin: 0 }}>
+      <div
+        className="w-full relative p-0 m-0"
+        style={{ height: "calc(100vh - 64px)" }}
+      >
         <Map
           mapStyle={mapStyle}
           mapboxAccessToken={MAPBOX_TOKEN}
@@ -265,7 +281,10 @@ export default function App() {
           }}
           attributionControl={false}
         >
-          <DeckGLOverlay layers={layers} interleaved={true} />
+          <DeckGLOverlay
+            layers={layers}
+            interleaved={true}
+          />
           {/* <DeckGL
         initialViewState={INITIAL_VIEW_STATE}
         controller={true}
@@ -287,47 +306,19 @@ export default function App() {
             ]}
           />
         </Map>
-        {/* </DeckGL> */}
-
-        {!!Object.keys(tileContent) && (
-          <pre
-            style={{
-              position: "fixed",
-              top: 0,
-              right: 0,
-              background: "rgba(255,255,255,0.9)",
-              maxWidth: "300px",
-              padding: "1em",
-            }}
-          >
-            {JSON.stringify(tileContent, null, 2)}
-          </pre>
-        )}
-
         <div
           style={{
-            position: "fixed",
+            position: "absolute",
             top: 0,
             left: 0,
             background: "rgba(255,255,255,0.9)",
             padding: "1em",
           }}
         >
-          <h1 style={{ margin: "0 0 .5em 0", padding: 0 }}>
-            Million Neighborhoods Data Explorer
-          </h1>
-          <p>
-            <a href="https://miurban.uchicago.edu/">
-              Mansueto Institute for Urban Innovation :: University of Chicago
-            </a>
-          </p>
-          <br />
-          <hr />
-          <br />
           <label id="variable-label">Choose a variable:</label>
-
           <select
             aria-labelledby="variable-label"
+            className="select select-sm w-full max-w-xs"
             onChange={(e) => setVariable(e.target.value)}
           >
             {mapVariables.map((f) => (
@@ -336,25 +327,20 @@ export default function App() {
               </option>
             ))}
           </select>
-          <br />
-          <br />
-          <p>Background map:</p>
-          <input
-            onChange={() => setShowSatellite(false)}
-            checked={!showSatellite}
-            type="radio"
-            value="Choropleth / Streets"
-          />
-          <label>Choropleth / Streets</label>
-          <br />
-          <input
-            onChange={() => setShowSatellite(true)}
-            checked={showSatellite}
-            type="radio"
-            value="Satellite"
-          />
-          <label>Satellite</label>
+          
+          <div className="divider"></div> 
 
+          <div className="form-control">
+            <label className="label cursor-pointer">
+              <span className="label-text">Satellite Map</span>
+              <input
+                type="checkbox"
+                className="toggle"
+                checked={showSatellite}
+                onChange={() => setShowSatellite((prev) => !prev)}
+              />
+            </label>
+          </div>
           {/* <p style={{padding:'1rem'}}>
           {currSchema.description}
         </p> */}
@@ -380,6 +366,14 @@ export default function App() {
             rangeType={currSchema.rangeType}
           />
         </div>
+        {!isLoaded && (
+          <div className="absolute w-full h-full top-0 left-0 bg-slate-50">
+            <div className="flex flex-col align-middle justify-center items-center h-full w-full">
+              <p>Map Loading</p>
+              <progress className="progress w-56"></progress>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

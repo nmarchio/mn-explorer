@@ -10,6 +10,8 @@ export const useTooltipStore = create<{
   setTooltipInfo: (tooltipInfo: PickingInfo) => set((state) => ({ tooltipInfo })),
 }));
 
+const NAV_OFFSET = 84
+
 export function Tooltip({ columns }: { columns: Array<TooltipSchema> }) {
   const tooltipInfo = useTooltipStore((state) => state.tooltipInfo);
   if (typeof window === "undefined") return null;
@@ -18,17 +20,17 @@ export function Tooltip({ columns }: { columns: Array<TooltipSchema> }) {
   const directionY = y < window.innerHeight / 2 ? 'top' : 'bottom'
   const [posX, posY] = [
     directionX === 'left' ? x + 10 : window.innerWidth - x + 10,
-    directionY === 'top' ? y + 10 : window.innerHeight - y + 10
+    directionY === 'top' ? y + 10 + 84: window.innerHeight - y + 20 - 84
   ]
   const properties = object?.properties
   if (x === undefined || x===-1 || !properties) return null
 
   return (
-    <div className="tooltip" style={{
+    <div className="fixed opacity-75 text-left" style={{
       [directionX]: posX,
       [directionY]: posY
     }}>
-      <table className="tooltip-table">
+      <table className="table table-zebra table-compact">
         <tbody>
           {columns.map(({column, label, format}) => (
             <tr key={label}>
