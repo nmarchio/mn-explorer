@@ -4,7 +4,7 @@ import { PMTLayer } from "@maticoapp/deck.gl-pmtiles";
 import {ScatterplotLayer} from '@deck.gl/layers/typed';
 import { MapboxOverlay, MapboxOverlayProps } from "@deck.gl/mapbox/typed";
 //@ts-ignore
-import Map, { NavigationControl, useControl } from "react-map-gl";
+import Map, { NavigationControl, useControl, AttributionControl } from "react-map-gl";
 import { Config } from "./config";
 import {
   // ConfigSpec,
@@ -235,6 +235,7 @@ export default function App() {
           const z = e.viewState.zoom;
           setZ(Math.round(z));
         }}
+        attributionControl={false}
       >
 
       <DeckGLOverlay layers={layers} interleaved={true} />
@@ -249,6 +250,7 @@ export default function App() {
         /> */}
         <GeocoderControl mapboxAccessToken={MAPBOX_TOKEN} position="top-right" />
         <NavigationControl />
+        <AttributionControl customAttribution={["© The University of Chicago", "Data via Maxar Ecopia"]} />
       </Map>
         {/* </DeckGL> */}
 
