@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mapbox/mapbox-gl-geocoder": "^5.0.1",
     "@maticoapp/deck.gl-pmtiles": "^0.0.31",
     "@types/d3": "^7.4.0",
     "d3": "^7.6.1",

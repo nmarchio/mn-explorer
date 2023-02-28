@@ -7,7 +7,7 @@ import { MapboxOverlay, MapboxOverlayProps } from "@deck.gl/mapbox/typed";
 import Map, { NavigationControl, useControl } from "react-map-gl";
 import { Config } from "./config";
 import {
-  ConfigSpec,
+  // ConfigSpec,
   generateColorFunc,
   // BgTileLayer,
   INITIAL_VIEW_STATE,
@@ -23,6 +23,7 @@ import { Tooltip, useTooltipStore } from "./Tooltip";
 import { tooltipColumns } from "./config/TooltipColumns";
 import type {PickingInfo } from '@deck.gl/core/typed';
 import { choroplethOpacity } from "./config/MapSettings";
+import GeocoderControl from './Geocoder';
 
 function DeckGLOverlay(props: MapboxOverlayProps & {
   interleaved?: boolean;
@@ -246,6 +247,7 @@ export default function App() {
           setZ(Math.round(zoom));
         }}
         /> */}
+        <GeocoderControl mapboxAccessToken={MAPBOX_TOKEN} position="top-right" />
         <NavigationControl />
       </Map>
         {/* </DeckGL> */}
