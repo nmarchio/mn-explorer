@@ -330,7 +330,7 @@ export default function App() {
           onChange={(e) => setVariable(e.target.value)}
         >
           {mapVariables.map((f) => (
-            <option value={f.name}>{f.name}</option>
+            <option value={f.name} key={f.name}>{f.name}</option>
           ))}
         </select>
         <br />
