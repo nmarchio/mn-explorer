@@ -187,10 +187,9 @@ export default function App() {
       pickable: true,
       tileSize: 256,
       // @ts-ignore
-      // beforeId: "waterway-shadow",
+      visible: z < 9,
       updateTriggers: {
-        stroked: z,
-        filled: z,
+        visible: z,
         getFillColor: [regionsColorFunc],
       },
       loadOptions,
@@ -225,6 +224,11 @@ export default function App() {
         mapboxAccessToken={MAPBOX_TOKEN}
         maxBounds={[-50, -47, 80, 43]}
         reuseMaps={true}
+        hash={true}
+        onMoveEnd={(e) => {
+          const z = e.viewState.zoom;
+          setZ(Math.round(z));
+        }}
       >
 
       <DeckGLOverlay layers={layers} interleaved={true} />
@@ -266,7 +270,7 @@ export default function App() {
         }}
       >
         <h1 style={{ margin: "0 0 .5em 0", padding: 0 }}>
-          Million Neighborhoods Data Explorer {z}
+          Million Neighborhoods Data Explorer
         </h1>
         <p>
           <a href="https://miurban.uchicago.edu/">
@@ -282,6 +286,9 @@ export default function App() {
             <option value={f.name}>{f.name}</option>
           ))}
         </select>
+        {/* <p style={{padding:'1rem'}}>
+          {currSchema.description}
+        </p> */}
       </div>
 
       <div
