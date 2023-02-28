@@ -1,7 +1,7 @@
 import { BitmapLayer } from "@deck.gl/layers/typed";
 import { TileLayer } from "@deck.gl/geo-layers/typed";
 import {scaleLinear} from "d3-scale";
-import { MapVariableSchema } from "./config/MapVariables";
+import { MapVariableSchema } from "@/config/MapVariables";
 
 export const INITIAL_VIEW_STATE = {
   longitude: 0,

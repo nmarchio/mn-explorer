@@ -1,11 +1,21 @@
-import { useState, useMemo, useCallback, useEffect, useLayoutEffect } from "react";
+"use client";
+import {
+  useState,
+  useMemo,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+} from "react";
 import DeckGL from "@deck.gl/react/typed";
 import { PMTLayer } from "@maticoapp/deck.gl-pmtiles";
-import {ScatterplotLayer} from '@deck.gl/layers/typed';
+import { ScatterplotLayer } from "@deck.gl/layers/typed";
 import { MapboxOverlay, MapboxOverlayProps } from "@deck.gl/mapbox/typed";
 //@ts-ignore
-import Map, { NavigationControl, useControl, AttributionControl } from "react-map-gl";
-import { Config } from "./config";
+import Map, {
+  NavigationControl,
+  useControl,
+  AttributionControl,
+} from "react-map-gl";
 import {
   // ConfigSpec,
   generateColorFunc,
@@ -13,34 +23,40 @@ import {
   INITIAL_VIEW_STATE,
   // generateExplicitColorFunc,
   // generateLabeledColorFunc,
-} from "./utils";
-import { ColorRange } from "./ColorRange";
+} from "@/utils/utils";
+import { ColorRange } from "@/components/ColorRange";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { Deck } from "@deck.gl/core/typed";
 import maplibre from "maplibre-gl";
-import { mapVariables } from "./config/MapVariables";
-import { Tooltip, useTooltipStore } from "./Tooltip";
-import { tooltipColumns } from "./config/TooltipColumns";
-import type {PickingInfo } from '@deck.gl/core/typed';
-import { choroplethOpacity } from "./config/MapSettings";
-import GeocoderControl from './Geocoder';
+import { mapVariables } from "@/config/MapVariables";
+import { Tooltip, useTooltipStore } from "@/components/Tooltip";
+import { tooltipColumns } from "@/config/TooltipColumns";
+import type { PickingInfo } from "@deck.gl/core/typed";
+import { choroplethOpacity } from "@/config/MapSettings";
+import GeocoderControl from "@/components/Geocoder";
+import Head from "next/head";
 
-function DeckGLOverlay(props: MapboxOverlayProps & {
-  interleaved?: boolean;
-}) {
+function DeckGLOverlay(
+  props: MapboxOverlayProps & {
+    interleaved?: boolean;
+  }
+) {
   const overlay = useControl<MapboxOverlay>(() => new MapboxOverlay(props));
   overlay.setProps(props);
   return null;
 }
 
+const styles = {
+  streets: "mapbox://styles/dhalpern/cl8n48kzu000a15p9o8z7wjmb",
+  satellite: "mapbox://styles/dhalpern/cldlspaaw000q01o091kg3q6e",
+};
 
-const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
+const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
 const REGION_URL =
   "https://d386ho3t0q1oea.cloudfront.net/region_map-2-10.pmtiles";
 const BLOCK_URL =
   "https://d386ho3t0q1oea.cloudfront.net/africa_map-9-14_simp3.pmtiles";
-  
 
 const loadOptions = {
   pmt: {
@@ -49,8 +65,9 @@ const loadOptions = {
       typeof navigator !== "undefined" ? navigator.hardwareConcurrency - 1 : 3,
     maxMobileConcurrency:
       typeof navigator !== "undefined" ? navigator.hardwareConcurrency - 1 : 3,
-    workerUrl: "https://unpkg.com/@maticoapp/deck.gl-pmtiles@0.0.14/dist/pmt-worker.js"
-  }
+    workerUrl:
+      "https://unpkg.com/@maticoapp/deck.gl-pmtiles@0.0.14/dist/pmt-worker.js",
+  },
 };
 const colors = [
   "#E8E7F4",
@@ -145,30 +162,39 @@ export default function App() {
   const [variable, setVariable] = useState(mapVariables[0].name);
   const [tileContent, setTileContent] = useState({});
   const [z, setZ] = useState(INITIAL_VIEW_STATE.zoom);
+  const [showSatellite, setShowSatellite] = useState(false);
   const zTransitionLevel = 7;
   const numZfade = 4;
   const colorScale = "warm";
-  const setTooltipInfo = useTooltipStore(state => state.setTooltipInfo);
+  const setTooltipInfo = useTooltipStore((state) => state.setTooltipInfo);
   // @ts-ignore
-  const currSchema = useMemo(() => mapVariables.find(v => v.name === variable) || mapVariables[0], [variable]);
+  const currSchema = useMemo(
+    () => mapVariables.find((v) => v.name === variable) || mapVariables[0],
+    [variable]
+  );
+  const mapStyle = showSatellite ? styles.satellite : styles.streets;
+  const blocksColorFunc = useCallback(
+    generateColorFunc(
+      currSchema.colorMapping,
+      currSchema.columnAccessors.blocks,
+      currSchema.rangeType
+    ),
+    [currSchema]
+  );
 
-  const blocksColorFunc = useCallback(generateColorFunc(
-    currSchema.colorMapping,
-    currSchema.columnAccessors.blocks,
-    currSchema.rangeType
-  ), [currSchema])
+  const regionsColorFunc = useCallback(
+    generateColorFunc(
+      currSchema.colorMapping,
+      currSchema.columnAccessors.region,
+      currSchema.rangeType
+    ),
+    [currSchema]
+  );
 
-  
-  const regionsColorFunc = useCallback(generateColorFunc(
-    currSchema.colorMapping,
-    currSchema.columnAccessors.region,
-    currSchema.rangeType
-  ), [currSchema])
-  
   const handleTooltipInfo = (info: PickingInfo) => {
-    console.log(info?.object?.properties)
-    info && setTooltipInfo(info)
-  }
+    console.log(info?.object?.properties);
+    info && setTooltipInfo(info);
+  };
 
   const layers = [
     new PMTLayer({
@@ -179,9 +205,9 @@ export default function App() {
       maxZoom: 10,
       filled: true,
       // @ts-ignore
-      getFillColor: d => {
-        const c = regionsColorFunc(d)
-        return c
+      getFillColor: (d) => {
+        const c = regionsColorFunc(d);
+        return c;
       },
       stroked: true,
       getLineColor: z > 9 ? [40, 40, 40, 255] : [0, 0, 0, 0],
@@ -189,14 +215,14 @@ export default function App() {
       pickable: true,
       tileSize: 256,
       // @ts-ignore
-      visible: z < 9,
+      visible: showSatellite ? 0 : z < 9,
       opacity: choroplethOpacity,
       updateTriggers: {
-        visible: z,
+        visible: [z, showSatellite],
         getFillColor: [regionsColorFunc],
       },
       loadOptions,
-      beforeId: "waterway-shadow"
+      beforeId: "waterway-shadow",
     }),
     new PMTLayer({
       id: "blocks-9-14-zoom",
@@ -213,20 +239,21 @@ export default function App() {
       pickable: true,
       stroked: false,
       tileSize: 256,
+      visible: !showSatellite,
       opacity: choroplethOpacity,
       updateTriggers: {
         getFillColor: [blocksColorFunc],
+        visible: showSatellite,
       },
       loadOptions,
-      beforeId: "waterway-shadow"
+      beforeId: "waterway-shadow",
     }),
   ];
 
   return (
     <div style={{ width: "100vw", height: "100vh", padding: 0, margin: 0 }}>
-          
       <Map
-        mapStyle="mapbox://styles/dhalpern/cl8n48kzu000a15p9o8z7wjmb"
+        mapStyle={mapStyle}
         mapboxAccessToken={MAPBOX_TOKEN}
         maxBounds={[-50, -47, 80, 43]}
         reuseMaps={true}
@@ -237,9 +264,8 @@ export default function App() {
         }}
         attributionControl={false}
       >
-
-      <DeckGLOverlay layers={layers} interleaved={true} />
-      {/* <DeckGL
+        <DeckGLOverlay layers={layers} interleaved={true} />
+        {/* <DeckGL
         initialViewState={INITIAL_VIEW_STATE}
         controller={true}
         layers={layers}
@@ -248,11 +274,19 @@ export default function App() {
           setZ(Math.round(zoom));
         }}
         /> */}
-        <GeocoderControl mapboxAccessToken={MAPBOX_TOKEN} position="top-right" />
+        <GeocoderControl
+          mapboxAccessToken={MAPBOX_TOKEN}
+          position="top-right"
+        />
         <NavigationControl />
-        <AttributionControl customAttribution={["© The University of Chicago", "Data via Maxar Ecopia"]} />
+        <AttributionControl
+          customAttribution={[
+            "© The University of Chicago",
+            "Data via Maxar Ecopia",
+          ]}
+        />
       </Map>
-        {/* </DeckGL> */}
+      {/* </DeckGL> */}
 
       {!!Object.keys(tileContent) && (
         <pre
@@ -286,15 +320,38 @@ export default function App() {
             Mansueto Institute for Urban Innovation :: University of Chicago
           </a>
         </p>
-        <br/>
-        <hr/>
-        <br/>
+        <br />
+        <hr />
+        <br />
         <label id="variable-label">Choose a variable:</label>
-        <select aria-labelledby="variable-label" onChange={e => setVariable(e.target.value)}>
-          {mapVariables.map(f=> (
+
+        <select
+          aria-labelledby="variable-label"
+          onChange={(e) => setVariable(e.target.value)}
+        >
+          {mapVariables.map((f) => (
             <option value={f.name}>{f.name}</option>
           ))}
         </select>
+        <br />
+        <br />
+        <p>Background map:</p>
+        <input
+          onChange={() => setShowSatellite(false)}
+          checked={!showSatellite}
+          type="radio"
+          value="Choropleth / Streets"
+        />
+        <label>Choropleth / Streets</label>
+        <br />
+        <input
+          onChange={() => setShowSatellite(true)}
+          checked={showSatellite}
+          type="radio"
+          value="Satellite"
+        />
+        <label>Satellite</label>
+
         {/* <p style={{padding:'1rem'}}>
           {currSchema.description}
         </p> */}
@@ -303,7 +360,7 @@ export default function App() {
       <div
         style={{
           position: "fixed",
-          bottom: '2rem',
+          bottom: "2rem",
           left: 0,
           background: "rgba(255,255,255,0.9)",
           padding: "1em",
@@ -312,7 +369,10 @@ export default function App() {
         <h3 style={{ margin: "0 0 .5em 0", padding: 0 }}>{currSchema.name}</h3>
         {/* @ts-ignore */}
         <Tooltip columns={tooltipColumns} />
-        <ColorRange colorScale={currSchema.colorMapping} rangeType={currSchema.rangeType} />
+        <ColorRange
+          colorScale={currSchema.colorMapping}
+          rangeType={currSchema.rangeType}
+        />
       </div>
     </div>
   );

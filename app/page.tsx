@@ -1,0 +1,23 @@
+import Image from 'next/image'
+import { Inter } from 'next/font/google'
+import styles from './page.module.css'
+
+const inter = Inter({ subsets: ['latin'] })
+
+export default function Home() {
+  return (
+    <main className={styles.main}>
+      <div className={styles.description}>
+        <h1 className={styles.title}>
+          Million Neighborhoods 
+          <br />
+          </h1>
+          <a href="/map">Map</a>
+          <br />
+          <a href="/about">About</a>
+          <br />
+          <a href="/download">Download</a>
+      </div>
+    </main>
+  )
+}
