@@ -199,6 +199,8 @@ export default function App() {
       id: "blocks-9-14-zoom",
       data: BLOCK_URL,
       onHover: handleTooltipInfo,
+      autoHighlight: true,
+      autoHighlightColor: [255, 255, 255, 255],
       // autoHighlight: true,
       minZoom: 10,
       maxZoom: 13,
