@@ -1,0 +1,1 @@
+export const choroplethOpacity = 0.75;

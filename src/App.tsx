@@ -22,6 +22,7 @@ import { mapVariables } from "./config/MapVariables";
 import { Tooltip, useTooltipStore } from "./Tooltip";
 import { tooltipColumns } from "./config/TooltipColumns";
 import type {PickingInfo } from '@deck.gl/core/typed';
+import { choroplethOpacity } from "./config/MapSettings";
 
 function DeckGLOverlay(props: MapboxOverlayProps & {
   interleaved?: boolean;
@@ -188,6 +189,7 @@ export default function App() {
       tileSize: 256,
       // @ts-ignore
       visible: z < 9,
+      opacity: choroplethOpacity,
       updateTriggers: {
         visible: z,
         getFillColor: [regionsColorFunc],
@@ -210,6 +212,7 @@ export default function App() {
       pickable: true,
       stroked: false,
       tileSize: 256,
+      opacity: choroplethOpacity,
       updateTriggers: {
         getFillColor: [blocksColorFunc],
       },
