@@ -281,10 +281,7 @@ export default function App() {
           }}
           attributionControl={false}
         >
-          <DeckGLOverlay
-            layers={layers}
-            interleaved={true}
-          />
+          <DeckGLOverlay layers={layers} interleaved={true} />
           {/* <DeckGL
         initialViewState={INITIAL_VIEW_STATE}
         controller={true}
@@ -327,8 +324,8 @@ export default function App() {
               </option>
             ))}
           </select>
-          
-          <div className="divider"></div> 
+
+          <div className="divider"></div>
 
           <div className="form-control">
             <label className="label cursor-pointer">
