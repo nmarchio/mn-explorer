@@ -51,7 +51,7 @@ const styles = {
   satellite: "mapbox://styles/dhalpern/cldlspaaw000q01o091kg3q6e",
 };
 
-const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
+const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
 const REGION_URL =
   "https://d386ho3t0q1oea.cloudfront.net/region_map-2-10.pmtiles";
@@ -367,9 +367,9 @@ export default function App() {
         }}
       >
         <h3 style={{ margin: "0 0 .5em 0", padding: 0 }}>{currSchema.name}</h3>
-        {/* @ts-ignore */}
         <Tooltip columns={tooltipColumns} />
         <ColorRange
+        {/* @ts-ignore */}
           colorScale={currSchema.colorMapping}
           rangeType={currSchema.rangeType}
         />
