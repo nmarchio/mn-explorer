@@ -305,7 +305,7 @@ export default function App() {
         <h3 style={{ margin: "0 0 .5em 0", padding: 0 }}>{currSchema.name}</h3>
         {/* @ts-ignore */}
         <Tooltip columns={tooltipColumns} />
-        <ColorRange colorScale={currSchema.colorMapping} />
+        <ColorRange colorScale={currSchema.colorMapping} rangeType={currSchema.rangeType} />
       </div>
     </div>
   );
