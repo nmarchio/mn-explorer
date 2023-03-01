@@ -216,20 +216,17 @@ export default function App() {
       // @ts-ignore
       getFillColor: (d) => {
         const c = regionsColorFunc(d);
-        return c;
+        return [...c, z < 11 ? 255 : 0];
       },
       stroked: true,
-      getLineColor: z > 9 ? [40, 40, 40, 255] : [0, 0, 0, 0],
+      getLineColor: z > 11 ? [40, 40, 40, 255] : [0, 0, 0, 0],
       lineWidthMinPixels: 1,
       pickable: true,
       tileSize: 256,
-      // @ts-ignore
-      visible: z < 9,
       opacity: showSatellite ? 0.25 : choroplethOpacity,
       updateTriggers: {
-        visible: [z, showSatellite],
         opacity: showSatellite,
-        getFillColor: [regionsColorFunc],
+        getFillColor: [z, regionsColorFunc],
       },
       onViewportLoad: () => setLayerLoaded("regions-0-10-zoom"),
       loadOptions,
