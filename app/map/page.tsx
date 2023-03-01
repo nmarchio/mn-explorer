@@ -224,10 +224,11 @@ export default function App() {
       pickable: true,
       tileSize: 256,
       // @ts-ignore
-      visible: showSatellite ? 0 : z < 9,
-      opacity: choroplethOpacity,
+      visible: z < 9,
+      opacity: showSatellite ? 0.25 : choroplethOpacity,
       updateTriggers: {
         visible: [z, showSatellite],
+        opacity: showSatellite,
         getFillColor: [regionsColorFunc],
       },
       onViewportLoad: () => setLayerLoaded("regions-0-10-zoom"),
@@ -250,11 +251,11 @@ export default function App() {
       stroked: false,
       tileSize: 256,
       visible: !showSatellite,
-      opacity: choroplethOpacity,
+      opacity: showSatellite ? 0.25 : choroplethOpacity,
       onViewportLoad: () => setLayerLoaded("blocks-9-14-zoom"),
       updateTriggers: {
         getFillColor: [blocksColorFunc],
-        visible: showSatellite,
+        opacity: showSatellite,
       },
       loadOptions,
       beforeId: "waterway-shadow",
@@ -303,15 +304,7 @@ export default function App() {
             ]}
           />
         </Map>
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            background: "rgba(255,255,255,0.9)",
-            padding: "1em",
-          }}
-        >
+        <div className="absolute top-0 left-0 p-4 bg-white bg-opacity-95">
           <label id="variable-label">Choose a variable:</label>
           <select
             aria-labelledby="variable-label"
@@ -343,18 +336,8 @@ export default function App() {
         </p> */}
         </div>
 
-        <div
-          style={{
-            position: "fixed",
-            bottom: "2rem",
-            left: 0,
-            background: "rgba(255,255,255,0.9)",
-            padding: "1em",
-          }}
-        >
-          <h3 style={{ margin: "0 0 .5em 0", padding: 0 }}>
-            {currSchema.name}
-          </h3>
+        <div className="fixed bottom-8 left-0 p-4 bg-white bg-opacity-90">
+          <h3 className="mb-2">{currSchema.name}</h3>
           <Tooltip columns={tooltipColumns} />
           <ColorRange
             // @ts-ignore
