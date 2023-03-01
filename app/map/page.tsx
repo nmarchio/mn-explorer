@@ -268,7 +268,7 @@ export default function App() {
       >
         {!isLoaded && <Preloader />}
 
-        <div className="dropdown absolute left-2 top-0 z-10">
+        <div className="dropdown absolute left-2 top-0 z-10 md:hidden">
           <label
             tabIndex={0}
             className="btn btn-circle drawer-button mt-2.5 ml-1 bg-white"
