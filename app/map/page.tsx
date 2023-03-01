@@ -223,7 +223,7 @@ export default function App() {
       lineWidthMinPixels: 1,
       pickable: true,
       tileSize: 256,
-      opacity: showSatellite ? 0.25 : choroplethOpacity,
+      opacity: showSatellite ? 0.05 : choroplethOpacity,
       updateTriggers: {
         opacity: showSatellite,
         getFillColor: [z, regionsColorFunc],
@@ -247,12 +247,11 @@ export default function App() {
       pickable: true,
       stroked: false,
       tileSize: 256,
-      visible: !showSatellite,
-      opacity: showSatellite ? 0.25 : choroplethOpacity,
+      opacity: showSatellite ? 0.05 : choroplethOpacity,
       onViewportLoad: () => setLayerLoaded("blocks-9-14-zoom"),
       updateTriggers: {
         getFillColor: [blocksColorFunc],
-        opacity: showSatellite,
+        opacity: [showSatellite],
       },
       loadOptions,
       beforeId: "waterway-shadow",
