@@ -29,7 +29,7 @@ export const CountryDownloader: React.FC<{
           {selectedCountry ? selectedCountry.name : "Choose a country"}
         </option>
         {countryList.map((country) => (
-          <option value={country.name}>{country.name}</option>
+          <option key={country.name} value={country.name}>{country.name}</option>
         ))}
       </select>
       {selectedCountry && <div className="my-4">

@@ -10,6 +10,7 @@ export const DownloadGroup: React.FC<{
     <div className="btn-group">
       {fileTypes.map((fileType) => (
         <a
+          key={fileType.name}
           className="btn btn-sm btn-outline mr-1"
           href={`${cdnBase}/${filename}.${fileType.extension}`}
           download
