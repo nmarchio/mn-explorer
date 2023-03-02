@@ -18,6 +18,7 @@ export const CountryDownloader: React.FC<{
     <>
       <select
         className="select w-full max-w-xs"
+        defaultValue={"_"}
         onChange={(e) => {
           const selectedCountry = countryList.find(
             (country) => country.name === e.target.value
@@ -25,8 +26,8 @@ export const CountryDownloader: React.FC<{
           selectedCountry && setSelectedCountry(selectedCountry);
         }}
       >
-        <option disabled selected>
-          {selectedCountry ? selectedCountry.name : "Choose a country"}
+        <option disabled key="_">
+          Choose a country
         </option>
         {countryList.map((country) => (
           <option key={country.name} value={country.name}>{country.name}</option>

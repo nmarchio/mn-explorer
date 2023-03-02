@@ -726,13 +726,14 @@
     "@babel/runtime" "^7.12.0"
     gl-matrix "^3.4.0"
 
-"@maticoapp/deck.gl-pmtiles@^0.0.31":
-  version "0.0.31"
-  resolved "https://registry.yarnpkg.com/@maticoapp/deck.gl-pmtiles/-/deck.gl-pmtiles-0.0.31.tgz#3f61d6fd7ec442ac07f5796cde6f104af52812a0"
-  integrity sha512-FOLX8egZzl5uT7vzrfdVg4+Fww3TDeAOLFjweDolHsK59pCSQirBDx6khxWtXqjnlI5MG5JDNFqcJP9WsJuMkw==
+"@maticoapp/deck.gl-pmtiles@^0.0.33":
+  version "0.0.33"
+  resolved "https://registry.yarnpkg.com/@maticoapp/deck.gl-pmtiles/-/deck.gl-pmtiles-0.0.33.tgz#0cae0242863125b49ebc848deb92cbb25a69f73d"
+  integrity sha512-RoL3A0j/lt7uIEKZZcKfdFLtdeiLK7x8VxU4yb2gfPQs3TrkcuYmymZr1a4uCdJQn1xWMyPjrrL6llHveK1A0Q==
   dependencies:
     deck.gl "^8.8.9"
     pmtiles "^2.4.0"
+    typescript "^4.8.2"
 
 "@next/env@13.2.1":
   version "13.2.1"
@@ -4557,7 +4558,7 @@ typed-array-length@^1.0.4:
     for-each "^0.3.3"
     is-typed-array "^1.1.9"
 
-typescript@4.9.5:
+typescript@4.9.5, typescript@^4.8.2:
   version "4.9.5"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.5.tgz#095979f9bcc0d09da324d58d03ce8f8374cbe65a"
   integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
