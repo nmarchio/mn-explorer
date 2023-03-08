@@ -16,6 +16,7 @@ const kComplexitySchema: MapVariableSchema = {
     "8": "#FF9859",
     "9": "#FFB857",
     "10+": "#FCD860",
+    "Off-network": "#DDDDDD"
   },
 };
 

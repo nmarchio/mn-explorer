@@ -60,15 +60,13 @@ const BLOCK_URL =
 
 const loadOptions = {
   pmt: {
-    // workerUrl: '/node_modules/@loaders.gl/mvt/dist/mvt-worker.js',
     maxConcurrency:
       typeof navigator !== "undefined" ? navigator.hardwareConcurrency - 1 : 3,
     maxMobileConcurrency:
-      typeof navigator !== "undefined" ? navigator.hardwareConcurrency - 1 : 3,
-    workerUrl:
-      "https://unpkg.com/@maticoapp/deck.gl-pmtiles@0.0.14/dist/pmt-worker.js",
-  },
+      typeof navigator !== "undefined" ? navigator.hardwareConcurrency - 1 : 3
+  }
 };
+
 const colors = [
   "#E8E7F4",
   "#CEC8DA",
@@ -164,9 +162,10 @@ export default function App() {
   const [z, setZ] = useState(INITIAL_VIEW_STATE.zoom);
   const [showSatellite, setShowSatellite] = useState(false);
   const [layersLoaded, setLayersLoaded] = useState({});
-  const zTransitionLevel = 7;
-  const numZfade = 4;
-  const colorScale = "warm";
+  // const zTransitionLevel = 7;
+  // const numZfade = 4;
+
+  // const colorScale = "warm";
   const setTooltipInfo = useTooltipStore((state) => state.setTooltipInfo);
   // @ts-ignore
   const currSchema = useMemo(
@@ -194,7 +193,6 @@ export default function App() {
   );
 
   const handleTooltipInfo = (info: PickingInfo) => {
-    console.log(info?.object?.properties);
     info && setTooltipInfo(info);
   };
 
@@ -237,9 +235,17 @@ export default function App() {
       data: BLOCK_URL,
       onHover: handleTooltipInfo,
       autoHighlight: true,
-      highlightColor: [230, 230, 0, 255],
+      highlightColor: d => {
+        if (!d?.object) return [0,0,0];
+        try {
+          const c = blocksColorFunc(d?.object)
+          return [c[0] + 20, c[1] + 20, c[2] + 20]
+        } catch {
+          return [0,0,0]
+        }
+      },
       // autoHighlight: true,
-      minZoom: 10,
+      minZoom: 11,
       maxZoom: 13,
       //@ts-ignore
       getFillColor: blocksColorFunc,
@@ -323,16 +329,17 @@ export default function App() {
             ]}
           />
         </Map>
-        <div className="absolute left-0 hidden bg-white bg-opacity-95 top-0 p-4 bottom-auto md:block">
+        <div className="absolute left-0 hidden bg-white bg-opacity-95 top-0 p-4 bottom-auto max-w-xs max-h-[75vh] overflow-y-auto md:block">
           <ControlPanel
             mapVariables={mapVariables}
             setVariable={setVariable}
             showSatellite={showSatellite}
             setShowSatellite={setShowSatellite}
           />
+          <Tooltip columns={tooltipColumns} />
         </div>
 
-        <div className="absolute bottom-8 right-0 p-2 w-28 bg-white bg-opacity-90 md:left-0 md:right-auto md:p-4 md:w-auto">
+        <div className="absolute bottom-8 right-0 p-2 w-28 bg-white bg-opacity-90 md:p-4 md:w-auto">
           <h3 className="mb-2 text-md">{currSchema.name}</h3>
           <ColorRange
             // @ts-ignore
@@ -341,7 +348,6 @@ export default function App() {
             rangeType={currSchema.rangeType}
           />
         </div>
-        <Tooltip columns={tooltipColumns} />
       </div>
     </>
   );
@@ -354,6 +360,7 @@ const Preloader = () => (
     </div>
   </div>
 );
+
 const ControlPanel: React.FC<{
   setVariable: React.Dispatch<React.SetStateAction<string>>;
   mapVariables: typeof mapVariables;
