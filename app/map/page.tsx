@@ -63,8 +63,8 @@ const loadOptions = {
     maxConcurrency:
       typeof navigator !== "undefined" ? navigator.hardwareConcurrency - 1 : 3,
     maxMobileConcurrency:
-      typeof navigator !== "undefined" ? navigator.hardwareConcurrency - 1 : 3
-  }
+      typeof navigator !== "undefined" ? navigator.hardwareConcurrency - 1 : 3,
+  },
 };
 
 const colors = [
@@ -192,6 +192,32 @@ export default function App() {
     [currSchema]
   );
 
+  const blocksHighlightColorFunc = useCallback(
+    (d: any) => {
+      if (!d?.object) return [0, 0, 0];
+      try {
+        const c = blocksColorFunc(d?.object);
+        return [c[0] + 30, c[1] + 30, c[2] + 30];
+      } catch {
+        return [0, 0, 0];
+      }
+    },
+    [blocksColorFunc]
+  );
+
+  const regionHighlightColorfunc = useCallback(
+    (d: any) => {
+      if (!d?.object) return [0, 0, 0];
+      try {
+        const c = regionsColorFunc(d?.object);
+        return [c[0] + 30, c[1] + 30, c[2] + 30];
+      } catch {
+        return [0, 0, 0];
+      }
+    },
+    [regionsColorFunc]
+  );
+
   const handleTooltipInfo = (info: PickingInfo) => {
     info && setTooltipInfo(info);
   };
@@ -216,10 +242,13 @@ export default function App() {
         const c = regionsColorFunc(d);
         return [...c, z < 11 ? 255 : 0];
       },
-      stroked: true,
-      getLineColor: z > 11 ? [40, 40, 40, 255] : [0, 0, 0, 0],
-      lineWidthMinPixels: 1,
+      // stroked: true,
+      // getLineColor: [255, 255, 255,50],
+      // lineWidthMinPixels: 1,
+      // lineWidthMaxPixels: 1,
       pickable: true,
+      autoHighlight: true,
+      highlightColor: regionHighlightColorfunc,
       tileSize: 256,
       opacity: showSatellite ? 0.05 : choroplethOpacity,
       updateTriggers: {
@@ -235,15 +264,7 @@ export default function App() {
       data: BLOCK_URL,
       onHover: handleTooltipInfo,
       autoHighlight: true,
-      highlightColor: d => {
-        if (!d?.object) return [0,0,0];
-        try {
-          const c = blocksColorFunc(d?.object)
-          return [c[0] + 20, c[1] + 20, c[2] + 20]
-        } catch {
-          return [0,0,0]
-        }
-      },
+      highlightColor: blocksHighlightColorFunc,
       // autoHighlight: true,
       minZoom: 11,
       maxZoom: 13,
