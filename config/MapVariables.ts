@@ -16,7 +16,7 @@ const kComplexitySchema: MapVariableSchema = {
     "8": "#FF9859",
     "9": "#FFB857",
     "10+": "#FCD860",
-    "Off-network": "#DDDDDD"
+    "Off-network": "#F9F871"
   },
 };
 
@@ -24,7 +24,7 @@ const BlockTypeSchema: MapVariableSchema = {
   name: "Block Type",
   description: "The typography of the block as urban, peri-urban, or non-urban.",
   columnAccessors: {
-    region: "k_ls_labels",
+    region: "area_type",
     blocks: "area_type",
   },
   colorMapping: {
@@ -43,14 +43,22 @@ const PopulationSchema: MapVariableSchema = {
   },
   rangeType: "unclassified",
   colorMapping: {
-    1:'#FCFFFC',
-    5:'#F0F0E4',
-    10:'#D6D5D3',
-    20:'#B1B8C7',
-    40:'#8C9BA5',
-    100:'#5C6D7E',
-    200:'#34495E',
-    300:'#00204C',
+    1: "#440154",
+    5: "#481a6c",
+    10: "#472f7d",
+    25: "#414487",
+    50: "#39568c",
+    75: "#31688e",
+    100: "#2a788e",
+    200: "#23888e",
+    300: "#1f988b",
+    400: "#22a884",
+    500: "#35b779",
+    600: "#54c568",
+    700: "#7ad151",
+    800: "#a5db36",
+    900: "#d2e21b",
+    1000: "#fde725",
   }
 };
 

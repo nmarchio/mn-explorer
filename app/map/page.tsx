@@ -47,16 +47,16 @@ function DeckGLOverlay(
 }
 
 const styles = {
-  streets: "mapbox://styles/dhalpern/cl8n48kzu000a15p9o8z7wjmb",
-  satellite: "mapbox://styles/dhalpern/cldlspaaw000q01o091kg3q6e",
+  streets: "mapbox://styles/nmarchi0/clf7bjhzl004d01oazq30inr1",
+  satellite: "mapbox://styles/nmarchi0/clf7dy0u2000g01lc2ho5xn0s",
 };
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
 const REGION_URL =
-  "https://d386ho3t0q1oea.cloudfront.net/region_map-2-10.pmtiles";
+  "https://d386ho3t0q1oea.cloudfront.net/regiontile-2-10.pmtiles";
 const BLOCK_URL =
-  "https://d386ho3t0q1oea.cloudfront.net/africa_map-9-14_simp3.pmtiles";
+  "https://d386ho3t0q1oea.cloudfront.net/blocktile-9-14.pmtiles";
 
 const loadOptions = {
   pmt: {
