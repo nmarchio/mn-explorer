@@ -3,7 +3,9 @@ import React from "react";
 export const ColorRange: React.FC<{
   colorScale: { value: number[] };
   rangeType: string;
-}> = ({ colorScale, rangeType }) => {
+  labelsToInclude: string[];
+}> = ({ colorScale, rangeType, labelsToInclude }) => {
+
   const len = Object.keys(colorScale).length - 1;
   const gradient =
     rangeType === "unclassified"
@@ -28,7 +30,11 @@ export const ColorRange: React.FC<{
                 }}
               ></div>
               <p key={i} className="ml-2 my-0">
-                {key}
+                {!labelsToInclude?.length || labelsToInclude.includes(key) ? (
+                  key
+                ) : (
+                  <EmptyCharacter />
+                )}
               </p>
             </div>
           ))}
@@ -59,9 +65,16 @@ export const ColorRange: React.FC<{
               {Object.entries(colorScale).map(([key, color], i) => (
                 <div
                   key={i}
-                  className="flex flex-row justify-between items-center text-left"
+                  className="flex flex-row justify-between items-center text-left ml-1"
                 >
-                  <p>{key}</p>
+                  <p>
+                    {!labelsToInclude?.length ||
+                    labelsToInclude.includes(key) ? (
+                      key
+                    ) : (
+                      <EmptyCharacter />
+                    )}
+                  </p>
                 </div>
               ))}
             </div>
@@ -81,3 +94,5 @@ function formatNumber(number: number): string {
     compactDisplay: "short",
   }).format(val);
 }
+
+const EmptyCharacter = () => <>&nbsp;</>;

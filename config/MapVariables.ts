@@ -41,6 +41,7 @@ const PopulationSchema: MapVariableSchema = {
     region: "landscan_population_un_density_hectare",
     blocks: "landscan_population_un_density_hectare",
   },
+  legendLabels: ['1','10','100','1000'],
   rangeType: "unclassified",
   colorMapping: {
     1: "#440154",
@@ -94,6 +95,7 @@ export type MapVariableSchema = {
     region: string;
     blocks: string;
   };
+  legendLabels?: Array<string>;
   rangeType?: "binned" | "unclassified" | undefined;
   colorMapping: {
     [value: string | number]: string;

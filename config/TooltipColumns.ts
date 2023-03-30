@@ -1,6 +1,9 @@
+import React from "react";
+
+export type DataAccesor = (d: any) => any;
 export type TooltipSchema = {
-  column: string;
-  label?: string;
+  column: string | DataAccesor;
+  label?: string | React.ReactNode;
   format?: (value: any) => string;
 }
 
@@ -26,9 +29,9 @@ export const tooltipColumns: Array<TooltipSchema> = [
     label: "Block complexity",
   },
   {
-    column: "landscan_population_un",
-    label: "Population estimate (LandScan)",
-    format: (v:number) => Math.round(v).toLocaleString()
+    column: (properties) => ({wp: properties["worldpop_population_un"], ls: properties["landscan_population_un"]}),
+    label:"Population Estimate km²",
+    format: (data: {wp:number,ls:number}) => `${Math.round(data.ls).toLocaleString()} (LS) | ${Math.round(data.wp).toLocaleString()} (WP)`
   },
   {
     column: "worldpop_population_un",
@@ -52,13 +55,13 @@ export const tooltipColumns: Array<TooltipSchema> = [
   },
   {
     column: "block_hectares",
-    label: "Block area (hectares)",
-    format: (v:number) => (Math.round(v*100)/100).toLocaleString()
+    label: "Block area",
+    format: (v:number) => `${(Math.round(v*100)/100).toLocaleString()} (hectares)`
   },
   {
     column: "block_area_km2",
-    label: "Block area (kilometers square)",
-    format: (v:number) => (Math.round(v*100)/100).toLocaleString()
+    label: "Block area",
+    format: (v:number) => `${(Math.round(v*100)/100).toLocaleString()}  (hectares)`
   },
   {
     column: "average_building_area_m2",

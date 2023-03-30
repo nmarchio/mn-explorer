@@ -197,7 +197,7 @@ export default function App() {
       if (!d?.object) return [0, 0, 0];
       try {
         const c = blocksColorFunc(d?.object);
-        return [c[0] + 30, c[1] + 30, c[2] + 30];
+        return [c[0] * 1.25, c[1] * 1.25, c[2] * 1.25];
       } catch {
         return [0, 0, 0];
       }
@@ -210,7 +210,7 @@ export default function App() {
       if (!d?.object) return [0, 0, 0];
       try {
         const c = regionsColorFunc(d?.object);
-        return [c[0] + 30, c[1] + 30, c[2] + 30];
+        return [c[0] * 1.25, c[1] * 1.25, c[2] * 1.25];
       } catch {
         return [0, 0, 0];
       }
@@ -328,7 +328,7 @@ export default function App() {
           }}
           attributionControl={false}
         >
-          <DeckGLOverlay layers={layers} interleaved={true} />
+          <DeckGLOverlay layers={layers} interleaved={true} stencil={true} />
           {/* <DeckGL
         initialViewState={INITIAL_VIEW_STATE}
         controller={true}
@@ -361,12 +361,14 @@ export default function App() {
         </div>
 
         <div className="absolute bottom-8 right-0 p-2 w-28 bg-white bg-opacity-90 md:p-4 md:w-auto">
-          <h3 className="mb-2 text-md">{currSchema.name}</h3>
+          <h3 className="mb-2 font-bold">{currSchema.name}</h3>
           <ColorRange
             // @ts-ignore
             colorScale={currSchema.colorMapping}
             // @ts-ignore
             rangeType={currSchema.rangeType}
+            // @ts-ignore
+            labelsToInclude={currSchema?.legendLabels}
           />
         </div>
       </div>
@@ -390,7 +392,7 @@ const ControlPanel: React.FC<{
 }> = ({ setVariable, mapVariables, showSatellite, setShowSatellite }) => {
   return (
     <>
-      <label id="variable-label">Choose a variable:</label>
+      {/* <label id="variable-label">Choose a variable:</label> */}
       <select
         aria-labelledby="variable-label"
         className="select select-sm w-full max-w-xs"
@@ -402,10 +404,7 @@ const ControlPanel: React.FC<{
           </option>
         ))}
       </select>
-
-      <div className="divider"></div>
-
-      <div className="form-control">
+      <div className="form-control my-1">
         <label className="label cursor-pointer">
           <span className="label-text">Satellite Map</span>
           <input
