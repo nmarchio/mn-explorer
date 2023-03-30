@@ -247,7 +247,7 @@ export default function App() {
           }}
           attributionControl={false}
         >
-          <DeckGLOverlay layers={layers} interleaved={true} stencil={true} />
+          <DeckGLOverlay layers={layers} interleaved={true} />
           {/* <DeckGL
         initialViewState={INITIAL_VIEW_STATE}
         controller={true}
