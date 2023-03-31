@@ -56,10 +56,12 @@ const styles = {
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
+const TRANSITION_ZOOM_THRESHOLD = 11;
+
 const REGION_URL =
-  "https://d386ho3t0q1oea.cloudfront.net/regiontile-2-10.pmtiles";
+  "https://d386ho3t0q1oea.cloudfront.net/regiontile2-2-11.pmtiles";
 const BLOCK_URL =
-  "https://d386ho3t0q1oea.cloudfront.net/blocktile-9-14.pmtiles";
+  "https://d386ho3t0q1oea.cloudfront.net/blocktile2-10-13.pmtiles";
 
 const loadOptions = {
   pmt: {
@@ -77,7 +79,7 @@ export default function App() {
   const [showSatellite, setShowSatellite] = useState(false);
   const [layersLoaded, setLayersLoaded] = useState({});
   const [hoveredLayer, setHoveredLayer] = useState("");
-  const tooltipColumns = hoveredLayer.includes("blocks")
+  const tooltipColumns = hoveredLayer.includes("block")
     ? blockTooltipColumns
     : regionTooltipColumns;
   const setTooltipInfo = useTooltipStore((state) => state.setTooltipInfo);
@@ -150,7 +152,7 @@ export default function App() {
 
   const layers = [
     new PMTLayer({
-      id: "regions-0-10-zoom",
+      id: "regiontile",
       data: REGION_URL,
       onHover: handleTooltipInfo,
       minZoom: 2,
@@ -159,7 +161,7 @@ export default function App() {
       // @ts-ignore
       getFillColor: (d) => {
         const c = regionsColorFunc(d);
-        return [...c, z < 11 ? 255 : 0];
+        return [...c, z < TRANSITION_ZOOM_THRESHOLD ? 255 : 0];
       },
       // stroked: true,
       // getLineColor: [255, 255, 255,50],
@@ -174,12 +176,12 @@ export default function App() {
         opacity: showSatellite,
         getFillColor: [z, regionsColorFunc],
       },
-      onViewportLoad: () => setLayerLoaded("regions-0-10-zoom"),
+      onViewportLoad: () => setLayerLoaded("regiontile"),
       loadOptions,
       beforeId: "waterway-shadow",
     }),
     new PMTLayer({
-      id: "blocks-9-14-zoom",
+      id: "blocktile",
       data: BLOCK_URL,
       onHover: handleTooltipInfo,
       autoHighlight: true,
@@ -194,7 +196,7 @@ export default function App() {
       stroked: false,
       tileSize: 256,
       opacity: showSatellite ? 0.05 : choroplethOpacity,
-      onViewportLoad: () => setLayerLoaded("blocks-9-14-zoom"),
+      onViewportLoad: () => setLayerLoaded("blocktile"),
       updateTriggers: {
         getFillColor: [blocksColorFunc],
         opacity: [showSatellite],
@@ -243,7 +245,7 @@ export default function App() {
           hash={true}
           onMoveEnd={(e) => {
             const z = e.viewState.zoom;
-            setZ(Math.round(z));
+            setZ(Math.round(z*10)/10);
           }}
           attributionControl={false}
         >

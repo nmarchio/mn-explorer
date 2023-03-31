@@ -16,19 +16,20 @@ const kComplexitySchema: MapVariableSchema = {
     "8": "#FF9859",
     "9": "#FFB857",
     "10+": "#FCD860",
-    "Off-network": "#F9F871"
+    "Off-network": "#F9F871",
   },
 };
 
 const BlockTypeSchema: MapVariableSchema = {
   name: "Block Type",
-  description: "The typography of the block as urban, peri-urban, or non-urban.",
+  description:
+    "The typography of the block as urban, peri-urban, or non-urban.",
   columnAccessors: {
     region: "area_type",
     blocks: "area_type",
   },
   colorMapping: {
-    "Urban": "#5a5f68",
+    Urban: "#5a5f68",
     "Peri-urban": "#9aaac7",
     "Non-urban": "#c5e6a4",
   },
@@ -41,29 +42,29 @@ const PopulationSchema: MapVariableSchema = {
     region: "landscan_population_un_density_hectare",
     blocks: "landscan_population_un_density_hectare",
   },
-  legendLabels: ['1','10','100','1000'],
+  legendLabels: ["1", "10", "100", "1000"],
   rangeType: "unclassified",
   colorMapping: {
     1: "#440154",
-    5: "#481a6c",
-    10: "#472f7d",
-    25: "#414487",
-    50: "#39568c",
-    75: "#31688e",
-    100: "#2a788e",
-    200: "#23888e",
-    300: "#1f988b",
-    400: "#22a884",
-    500: "#35b779",
-    600: "#54c568",
-    700: "#7ad151",
-    800: "#a5db36",
-    900: "#d2e21b",
-    1000: "#fde725",
-  }
+    1.7: "#472172",
+    5.6: "#423E84",
+    10: "#38578C",
+    17.7: "#2D6F8E",
+    31.6: "#24858E",
+    56.2: "#1F9A89",
+    100: "#2CB07E",
+    177.8: "#51C369",
+    316.2: "#85D349",
+    562.3: "#C1DF24",
+    1000: "#FDE725",
+  },
 };
 
-const variables: Array<MapVariableSchema> = [kComplexitySchema, BlockTypeSchema,PopulationSchema];
+const variables: Array<MapVariableSchema> = [
+  kComplexitySchema,
+  BlockTypeSchema,
+  PopulationSchema,
+];
 
 export const mapVariables = variables.map((schema) => ({
   ...schema,
