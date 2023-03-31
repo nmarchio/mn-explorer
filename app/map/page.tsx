@@ -245,7 +245,7 @@ export default function App() {
           hash={true}
           onMoveEnd={(e) => {
             const z = e.viewState.zoom;
-            setZ(Math.round(z));
+            setZ(Math.round(z*10)/10);
           }}
           attributionControl={false}
         >
