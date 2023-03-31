@@ -56,6 +56,8 @@ const styles = {
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
+const TRANSITION_ZOOM_THRESHOLD = 11;
+
 const REGION_URL =
   "https://d386ho3t0q1oea.cloudfront.net/regiontile2-2-11.pmtiles";
 const BLOCK_URL =
@@ -154,12 +156,12 @@ export default function App() {
       data: REGION_URL,
       onHover: handleTooltipInfo,
       minZoom: 2,
-      maxZoom: 11,
+      maxZoom: 10,
       filled: true,
       // @ts-ignore
       getFillColor: (d) => {
         const c = regionsColorFunc(d);
-        return [...c, z < 11 ? 255 : 0];
+        return [...c, z < TRANSITION_ZOOM_THRESHOLD ? 255 : 0];
       },
       // stroked: true,
       // getLineColor: [255, 255, 255,50],
