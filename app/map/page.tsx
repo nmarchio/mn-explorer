@@ -77,7 +77,7 @@ export default function App() {
   const [showSatellite, setShowSatellite] = useState(false);
   const [layersLoaded, setLayersLoaded] = useState({});
   const [hoveredLayer, setHoveredLayer] = useState("");
-  const tooltipColumns = hoveredLayer.includes("blocks")
+  const tooltipColumns = hoveredLayer.includes("block")
     ? blockTooltipColumns
     : regionTooltipColumns;
   const setTooltipInfo = useTooltipStore((state) => state.setTooltipInfo);
