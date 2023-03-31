@@ -34,20 +34,15 @@ export function Tooltip({ columns }: { columns: Array<TooltipSchema> }) {
           typeof column == "string" ? properties[column] : column(properties);
         if (data === undefined) return null;
         return (
-          <div
-            key={idx}
-            className={`py-0.5 flex flex-row text-xs border-b-2`}
-          >
+          <div key={idx} className={`py-0.5 flex flex-row text-xs border-b-2`}>
             <div className="w-[50%]">{label}:</div>
-            <div className="w-[50%]">
-              {format ? format(data) : data}
-            </div>
+            <div className="w-[50%]">{format ? format(data) : data}</div>
           </div>
         );
       })}
-      <p className="text-xs"> 
-        Population derived from LandScan & WorldPop 
-        adjusted to 2020 UN national statistics.
+      <p className="text-xs">
+        Population derived from LandScan & WorldPop adjusted to 2020 UN national
+        statistics.
       </p>
     </div>
   );
