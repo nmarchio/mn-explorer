@@ -57,9 +57,9 @@ const styles = {
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
 const REGION_URL =
-  "https://d386ho3t0q1oea.cloudfront.net/regiontile-2-10.pmtiles";
+  "https://d386ho3t0q1oea.cloudfront.net/regiontile2-2-11.pmtiles";
 const BLOCK_URL =
-  "https://d386ho3t0q1oea.cloudfront.net/blocktile-9-14.pmtiles";
+  "https://d386ho3t0q1oea.cloudfront.net/blocktile2-10-13.pmtiles";
 
 const loadOptions = {
   pmt: {
@@ -150,11 +150,11 @@ export default function App() {
 
   const layers = [
     new PMTLayer({
-      id: "regions-0-10-zoom",
+      id: "regiontile",
       data: REGION_URL,
       onHover: handleTooltipInfo,
       minZoom: 2,
-      maxZoom: 10,
+      maxZoom: 11,
       filled: true,
       // @ts-ignore
       getFillColor: (d) => {
@@ -174,12 +174,12 @@ export default function App() {
         opacity: showSatellite,
         getFillColor: [z, regionsColorFunc],
       },
-      onViewportLoad: () => setLayerLoaded("regions-0-10-zoom"),
+      onViewportLoad: () => setLayerLoaded("regiontile"),
       loadOptions,
       beforeId: "waterway-shadow",
     }),
     new PMTLayer({
-      id: "blocks-9-14-zoom",
+      id: "blocktile",
       data: BLOCK_URL,
       onHover: handleTooltipInfo,
       autoHighlight: true,
@@ -194,7 +194,7 @@ export default function App() {
       stroked: false,
       tileSize: 256,
       opacity: showSatellite ? 0.05 : choroplethOpacity,
-      onViewportLoad: () => setLayerLoaded("blocks-9-14-zoom"),
+      onViewportLoad: () => setLayerLoaded("blocktile"),
       updateTriggers: {
         getFillColor: [blocksColorFunc],
         opacity: [showSatellite],

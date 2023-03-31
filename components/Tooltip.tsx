@@ -45,9 +45,9 @@ export function Tooltip({ columns }: { columns: Array<TooltipSchema> }) {
           </div>
         );
       })}
-      <p className="text-xs italic">
-        Population derived from WorldPop (WP) | LandScan (LS) adjusted to 2020
-        UN national statistics.
+      <p className="text-xs"> 
+        Population derived from LandScan & WorldPop 
+        adjusted to 2020 UN national statistics.
       </p>
     </div>
   );
