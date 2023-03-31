@@ -10,9 +10,15 @@ export default function Footer() {
           <br />
           (773) 702-7894
           <br />
-          <div className="divider"></div>© {new Date().getUTCFullYear()} The
-          University of Chicago <br />
-          All rights reserved
+          <p className="my-4">
+            © {new Date().getUTCFullYear()} The
+            University of Chicago <br />
+            All rights reserved
+          </p>
+
+          <p className="max-w-[50ch] mt-4">
+            Data engineering and interactive support provided by Open Spatial Lab at the Data Science Institute at the University of Chicago
+          </p>
         </p>
       </div>
       <div>
