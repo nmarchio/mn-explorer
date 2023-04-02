@@ -1,15 +1,18 @@
 import React from "react";
 
 export const ColorRange: React.FC<{
-  colorScale: { value: number[] };
+  colorScale: Array<{ color: number[]; value: string }>;
   rangeType: string;
   labelsToInclude: string[];
 }> = ({ colorScale, rangeType, labelsToInclude }) => {
+  const colors = colorScale.map((d) => d.color);
+  const values = colorScale.map((d) => d.value);
 
   const len = Object.keys(colorScale).length - 1;
+
   const gradient =
     rangeType === "unclassified"
-      ? `linear-gradient(180deg, ${Object.values(colorScale)
+      ? `linear-gradient(180deg, ${colors
           .map((v, i) => `rgb(${v.join(",")}) ${Math.round((i / len) * 100)}%`)
           .join(", ")})`
       : "";
@@ -18,7 +21,7 @@ export const ColorRange: React.FC<{
     <div className="flex flex-row text-xs">
       <div className="flex flex-col justify-between items-start">
         {rangeType === undefined &&
-          Object.entries(colorScale).map(([key, color], i) => (
+          colorScale.map(({ color, value }, i) => (
             <div
               key={i}
               className="flex flex-row justify-between items-center text-left"
@@ -30,8 +33,9 @@ export const ColorRange: React.FC<{
                 }}
               ></div>
               <p key={i} className="ml-2 my-0">
-                {!labelsToInclude?.length || labelsToInclude.includes(key) ? (
-                  key
+                {!labelsToInclude?.length ||
+                labelsToInclude?.includes(`${value}`) ? (
+                  value
                 ) : (
                   <EmptyCharacter />
                 )}
@@ -39,7 +43,7 @@ export const ColorRange: React.FC<{
             </div>
           ))}
         {rangeType === "binned" &&
-          Object.entries(colorScale).map(([key, color], i) => (
+          colorScale.map(({ color, value }, i) => (
             <div
               key={i}
               className="flex flex-row justify-between items-center text-left"
@@ -49,11 +53,11 @@ export const ColorRange: React.FC<{
                 style={{ background: `rgb(${color.join(",")}` }}
               />
               <p>
-                {i === 0 && `< ${key}`}
-                {i === Object.entries(colorScale).length - 1 && `> ${key}`}
+                {i === 0 && `< ${value}`}
+                {i === colorScale.length - 1 && `> ${value}`}
                 {i !== 0 &&
-                  i !== Object.entries(colorScale).length - 1 &&
-                  `${key} - ${Object.entries(colorScale)[i + 1][0]}`}
+                  i !== colorScale.length - 1 &&
+                  `${value} - ${colorScale[i + 1].value}`}
               </p>
             </div>
           ))}
@@ -62,15 +66,15 @@ export const ColorRange: React.FC<{
           <div className="flex flex-row">
             <div className="w-4 h-full" style={{ background: gradient }}></div>
             <div>
-              {Object.entries(colorScale).map(([key, color], i) => (
+              {colorScale.map(({ value, color }, i) => (
                 <div
                   key={i}
                   className="flex flex-row justify-between items-center text-left ml-1"
                 >
                   <p>
                     {!labelsToInclude?.length ||
-                    labelsToInclude.includes(key) ? (
-                      key
+                    labelsToInclude?.includes(`${value}`) ? (
+                      value
                     ) : (
                       <EmptyCharacter />
                     )}

@@ -5,19 +5,19 @@ const kComplexitySchema: MapVariableSchema = {
     region: "k_ls_labels",
     blocks: "k_labels",
   },
-  colorMapping: {
-    "1": "#414141",
-    "2": "#777777",
-    "3": "#93328E",
-    "4": "#B83A85",
-    "5": "#D9477A",
-    "6": "#F25D6D",
-    "7": "#FB7962",
-    "8": "#FF9859",
-    "9": "#FFB857",
-    "10+": "#FCD860",
-    "Off-network": "#F9F871",
-  },
+  colorMapping: [
+    { value: "1", color: "#414141" },
+    { value: "2", color: "#777777" },
+    { value: "3", color: "#93328E" },
+    { value: "4", color: "#B83A85" },
+    { value: "5", color: "#D9477A" },
+    { value: "6", color: "#F25D6D" },
+    { value: "7", color: "#FB7962" },
+    { value: "8", color: "#FF9859" },
+    { value: "9", color: "#FFB857" },
+    { value: "10+", color: "#FCD860" },
+    { value: "Off-network", color: "#F9F871" },
+  ],
 };
 
 const BlockTypeSchema: MapVariableSchema = {
@@ -28,11 +28,11 @@ const BlockTypeSchema: MapVariableSchema = {
     region: "area_type",
     blocks: "area_type",
   },
-  colorMapping: {
-    Urban: "#5a5f68",
-    "Peri-urban": "#9aaac7",
-    "Non-urban": "#c5e6a4",
-  },
+  colorMapping: [
+    { value: "Urban", color: "#5a5f68" },
+    { value: "Peri-urban", color: "#9aaac7" },
+    { value: "Non-urban", color: "#c5e6a4" },
+  ],
 };
 
 const PopulationSchema: MapVariableSchema = {
@@ -44,20 +44,20 @@ const PopulationSchema: MapVariableSchema = {
   },
   legendLabels: ["1", "10", "100", "1000"],
   rangeType: "unclassified",
-  colorMapping: {
-    1: "#440154",
-    1.7: "#472172",
-    5.6: "#423E84",
-    10: "#38578C",
-    17.7: "#2D6F8E",
-    31.6: "#24858E",
-    56.2: "#1F9A89",
-    100: "#2CB07E",
-    177.8: "#51C369",
-    316.2: "#85D349",
-    562.3: "#C1DF24",
-    1000: "#FDE725",
-  },
+  colorMapping: [
+    { value: 1, color: "#440154" },
+    { value: 1.7, color: "#472172" },
+    { value: 5.6, color: "#423E84" },
+    { value: 10, color: "#38578C" },
+    { value: 17.7, color: "#2D6F8E" },
+    { value: 31.6, color: "#24858E" },
+    { value: 56.2, color: "#1F9A89" },
+    { value: 100, color: "#2CB07E" },
+    { value: 177.8, color: "#51C369" },
+    { value: 316.2, color: "#85D349" },
+    { value: 562.3, color: "#C1DF24" },
+    { value: 1000, color: "#FDE725" },
+  ],
 };
 
 const variables: Array<MapVariableSchema> = [
@@ -68,10 +68,10 @@ const variables: Array<MapVariableSchema> = [
 
 export const mapVariables = variables.map((schema) => ({
   ...schema,
-  colorMapping: Object.entries(schema.colorMapping).reduce(
-    (acc, [key, value]) => ({
-      ...acc,
-      [key]: convertHexToRgb(value),
+  colorMapping: schema.colorMapping.map(
+    ({ color, value }) => ({
+      value: value,
+      color: convertHexToRgb(color),
     }),
     {}
   ),
@@ -98,7 +98,8 @@ export type MapVariableSchema = {
   };
   legendLabels?: Array<string>;
   rangeType?: "binned" | "unclassified" | undefined;
-  colorMapping: {
-    [value: string | number]: string;
-  };
+  colorMapping: Array<{
+    color: string;
+    value: string | number;
+  }>;
 };

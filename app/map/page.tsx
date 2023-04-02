@@ -245,7 +245,7 @@ export default function App() {
           hash={true}
           onMoveEnd={(e) => {
             const z = e.viewState.zoom;
-            setZ(Math.round(z*10)/10);
+            setZ(Math.round(z * 10) / 10);
           }}
           attributionControl={false}
         >
@@ -271,7 +271,7 @@ export default function App() {
             ]}
           />
         </Map>
-        <div className="absolute left-0 hidden bg-white bg-opacity-95 top-0 p-4 bottom-auto max-w-xs max-h-[75vh] overflow-y-auto md:block">
+        <div className="absolute left-0 hidden bg-white bg-opacity-95 top-0 p-4 bottom-auto max-h-[75vh] w-[22vw] overflow-y-auto md:block">
           <ControlPanel
             mapVariables={mapVariables}
             setVariable={setVariable}

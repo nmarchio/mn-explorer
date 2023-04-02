@@ -56,38 +56,47 @@ export const generateColorFunc = (colorSchema: any, column: string, rangeType?: 
   }
 }
 export const generateRangeColorFunc = (
-  colorScale: {[value: string | number]: number[]},
+  colorScale: Array<{color:number[], value: number}>,
   column: string
 ) => {
   const accessor = (d: any) => d.properties[column];
   const entries = Object.entries(colorScale);
+  const values = entries.map(([k,v]) => parseInt(k));
+  const colors = entries.map(([k,v]) => v.color);
+  const max = Math.max(...values);
+  const maxIndex = values.indexOf(max);
+
   return (f: any) => {
     const value = accessor(f);
     if (value === null || value === undefined) return [0,0,0,0];
-    if (value > entries[entries.length-1][0]) return entries[entries.length-1][1];
-    for (let i=0; i<entries.length; i++) {
-      if (value <= entries[i][0]) return entries[i][1];
+    if (value > max) return colors[maxIndex];
+    for (let i=0; i<values.length; i++) {
+      if (value <= values[i]) return colors[i];
     }
     return [0,0,0,0];
   }
 }
 
 export const generateLabeledColorFunc = (
-  colorScale: {[value: string | number]: number[]},
+  colorScale: Array<{color:number[], value: number}>,
   column: string
 ) => {
   const accessor = (d: any) => d.properties[column];
-  return (f: any) => colorScale?.[accessor(f)] || [0,0,0,0];
+  return (f: any) => {
+    const val = accessor(f);
+    return colorScale.find(c => val === c.value)?.color || [0,0,0,0];
+  }
 }
 
 export const generateGradientColorFunc = (
-  colorScale: {[value: string | number]: number[]},
+  colorScale: Array<{color:number[], value: number}>,
   column: string
 ) => {
   const accessor = (d: any) => d.properties[column];
-  const entries = Object.entries(colorScale);
-  const colorRange = entries.map((e: any) => `rgb(${e[1].join(",")})`);
-  const valueDomain = entries.map((e: any) => e[0]);
+
+  const colorRange = colorScale.map(({color}) => `rgb(${color.join(",")})`);
+  const valueDomain = colorScale.map(({value}) => value);
+
   const colorScaleFunc = scaleLinear()
     .domain([
       -Math.pow(10,12),
