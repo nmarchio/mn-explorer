@@ -23,17 +23,17 @@ export default function Footer() {
       </div>
       <div>
         <span className="footer-title">Million Neighborhoods</span>
-        <a className="link link-hover">Map</a>
-        <a className="link link-hover">About</a>
-        <a className="link link-hover">Download</a>
-        <a className="link link-hover">Publication</a>
+        <a className="link link-hover" href="/">Map</a>
+        <a className="link link-hover" href="/about">About</a>
+        <a className="link link-hover" href="/download">Download</a>
+        {/* <a className="link link-hover">Publication</a> */}
       </div>
       <div>
         <span className="footer-title">Contributing Organizations</span>
-        <a className="link link-hover">University of Chicago</a>
-        <a className="link link-hover">Mansueto Institute for Urban Innovation</a>
-        <a className="link link-hover">Open Spatial Lab @ DSI</a>
-        <a className="link link-hover">Research Computing Center</a>
+        <a className="link link-hover" href="https://www.uchicago.edu/" target="_blank" rel="noopener noreferer">University of Chicago</a>
+        <a className="link link-hover" href="https://miurban.uchicago.edu/" target="_blank" rel="noopener noreferer">Mansueto Institute for Urban Innovation</a>
+        <a className="link link-hover" href="https://openspatial.io/" target="_blank" rel="noopener noreferer">Open Spatial Lab @ DSI</a>
+        <a className="link link-hover" href="https://rcc.uchicago.edu/" target="_blank" rel="noopener noreferer">Research Computing Center</a>
       </div>
       <div>
         <span className="footer-title">Legal</span>

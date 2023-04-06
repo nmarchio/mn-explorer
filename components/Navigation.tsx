@@ -9,7 +9,7 @@ export default function Navigation() {
       <div className="flex-none hidden md:block">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <a href="/map">Map</a>
+            <a href="/">Map</a>
           </li>
           <li>
             <a href="/about">About</a>
@@ -29,9 +29,9 @@ export default function Navigation() {
           tabIndex={0}
           className="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52"
         >
-          <li>
+          {/* <li>
             <a href="/map">Map</a>
-          </li>
+          </li> */}
           <li>
             <a href="/about">About</a>
           </li>
