@@ -40,7 +40,7 @@ export function Tooltip({ columns }: { columns: Array<TooltipSchema> }) {
           </div>
         );
       })}
-      <p className="text-xs">
+      <p className="text-xxs">
         Population derived from LandScan & WorldPop adjusted to 2020 UN national
         statistics.
       </p>

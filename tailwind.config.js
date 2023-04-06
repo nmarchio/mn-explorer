@@ -14,6 +14,9 @@ module.exports = {
       fontFamily: {
         'sans': ['Montserrat', 'helvetica', 'arial', 'sans-serif']
       },
+      fontSize: {
+        "xxs": ".625rem",
+      }
     },
   },
   daisyui: {
