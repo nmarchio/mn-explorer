@@ -2,13 +2,32 @@ import { CountryDownloader } from "@/components/CountryDownloader";
 import { DownloadGroup } from "@/components/DownloadGroup";
 
 const getCountryList = async () => {
+  // const countryList = await fetch("cdn.net/index_of_countries.json")
+  // const countryListJson = await countryList.json()
+  // return countryListJson
   return [
     {
       name: "Kenya",
       filepath: "kenya",
     },
+    {
+      name: "South Africa",
+      filepath: "south_africa",
+    },
   ];
 };
+
+// hard coded implementation
+// const countryList = [
+//   {
+//     name: "Kenya",
+//     filepath: "kenya",
+//   },
+//   {
+//     name: "South Africa",
+//     filepath: "south_africa",
+//   },
+// ];
 
 const fileTypes = [
   {
@@ -23,11 +42,16 @@ const fileTypes = [
     name: "CSV / Excel",
     extension: "csv",
   },
+  {
+    name: "GeoJSON",
+    extension: "geojson",
+  },
 ];
 
-const cdnBase = "https://";
+const cdnBase = "https://cloudfront1234.net";
 
 export default async function Download() {
+  // dynamic fetch
   const countryList = await getCountryList();
   return (
     <main className="px-6">
@@ -48,7 +72,7 @@ export default async function Download() {
           <DownloadGroup
             fileTypes={fileTypes}
             cdnBase={cdnBase}
-            filename="all"
+            filename="million_neighborhoods_africa_data"
           />
         </div>
         <div className="mt-12 md:mt-0 md:w-[50%]">

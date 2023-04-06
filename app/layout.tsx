@@ -1,7 +1,7 @@
 import Footer from '@/components/Footer'
 import Navigation from '@/components/Navigation'
 import { Montserrat } from 'next/font/google';
-import '../../globals.css'
+import './globals.css'
 
 export const metadata = {
   title: 'Million Neighborhoods Project',
@@ -42,6 +42,7 @@ export default function RootLayout({
       <body>
         <Navigation />
         {children}
+        {/* <Footer /> */}
       </body>
     </html>
   )
