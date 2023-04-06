@@ -44,7 +44,7 @@ export function Tooltip({ columns }: { columns: Array<TooltipSchema> }) {
         Population derived from LandScan (LS) & WorldPop (WP),
         adjusted to fit 2020 UN estimates. Block statistics
         use building data from Ecopia.AI & Maxar. Buildings
-        layers visualized in map reflect OpenStreetMap data.
+        shown are from crowdsourced OpenStreetMap data.
       </p>
     </div>
   );
