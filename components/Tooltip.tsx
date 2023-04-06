@@ -41,8 +41,10 @@ export function Tooltip({ columns }: { columns: Array<TooltipSchema> }) {
         );
       })}
       <p className="text-xxs">
-        Population derived from LandScan & WorldPop adjusted to 2020 UN national
-        statistics.
+        Population derived from LandScan (LS) & WorldPop (WP),
+        adjusted to fit 2020 UN estimates. Block statistics
+        use building data from Ecopia.AI & Maxar. Buildings
+        layers visualized in map reflect OpenStreetMap data.
       </p>
     </div>
   );
