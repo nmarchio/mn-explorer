@@ -4,25 +4,25 @@ import { Montserrat } from 'next/font/google';
 import '../globals.css'
 
 export const metadata = {
-  title: 'Million Neighborhoods Project',
-  description: 'Million Neighborhoods is an initiative of the Mansueto Institute for Urban Innovation at the University of Chicago to provide frameworks, tools, and data for mapping, planning, and coordinating solutions towards fulfilling the UN’s Agenda 2030 for Global Sustainable Development.',
-  keywords: 'slum,informal settlement,map,million neighborhoods,reblock,global,world,earth,africa,university of chicago,uchicago,mansueto,miurban,data,street,road,access,infrastructure,urban,science,algorithms,bettencourt,marchio,soman,nederhood,sdg,sustainable,poverty,development',
-  image: "https://millionneighborhoods.org/extra/images/hi-res.png",
+  title: 'Million Neighborhoods',
+  description: 'Million Neighborhoods is an initiative to provide tools and data for mapping, planning, and coordinating solutions that improve the delivery of critical public services in rapidly urbanizing countries.',
+  keywords: 'slum,informal settlement,map,million neighborhoods,reblock,global,world,earth,africa,university of chicago,uchicago,mansueto,miurban,data,street,road,access,infrastructure,urban,science,algorithms,bettencourt,marchio,sdg,sustainable,poverty,development',
+  image: "https://millionneighborhoods.africa/public/card-image.png",
   openGraph: {
-    url: "https://millionneighborhoods.org",
-    image: "https://millionneighborhoods.org/extra/images/hi-res.png",
+    url: "https://www.millionneighborhoods.africa",
+    image: "https://millionneighborhoods.africa/public/card-image.png",
     type:"website",
-    title:"Global Map Helps Identify Urban Slums",
-    description:"Urban researchers harness algorithms to map slums — and improve access to much-needed public services."
+    title:"Mapping development down to the street block",
+    description:"Interactive maps reveals the location and size of informal settlements in sub-Saharan Africa."
   },
   twitter: {
     card:"summary_large_image",
     site:"@miurbanchicago",
     creator:"@miurbanchicago",
-    title:"Global Map Helps Identify Urban Slums",
-    description:"Urban researchers harness algorithms to map slums — and improve access to much-needed public services.",
-    url:"https://millionneighborhoods.org",
-    image:"https://millionneighborhoods.org/extra/images/hi-res.png"
+    title:"Mapping development down to the street block",
+    description:"Interactive maps reveals the location and size of informal settlements in sub-Saharan Africa.",
+    url:"https://www.millionneighborhoods.africa",
+    image:"https://millionneighborhoods.africa/public/card-image.png"
   }
 }
 
