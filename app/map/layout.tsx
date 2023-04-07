@@ -7,10 +7,10 @@ export const metadata = {
   title: 'Million Neighborhoods',
   description: 'Million Neighborhoods is an initiative to provide tools and data for mapping, planning, and coordinating solutions that improve the delivery of critical public services in rapidly urbanizing countries.',
   keywords: 'slum,informal settlement,map,million neighborhoods,reblock,global,world,earth,africa,university of chicago,uchicago,mansueto,miurban,data,street,road,access,infrastructure,urban,science,algorithms,bettencourt,marchio,sdg,sustainable,poverty,development',
-  image: "https://millionneighborhoods.africa/public/hi-res-card.svg",
+  image: "https://millionneighborhoods.africa/public/card-image.png",
   openGraph: {
     url: "https://www.millionneighborhoods.africa",
-    image: "https://millionneighborhoods.africa/public/hi-res-card.svg",
+    image: "https://millionneighborhoods.africa/public/card-image.png",
     type:"website",
     title:"Mapping development down to the street block",
     description:"Interactive maps reveals the location and size of informal settlements in sub-Saharan Africa."
@@ -22,7 +22,7 @@ export const metadata = {
     title:"Mapping development down to the street block",
     description:"Interactive maps reveals the location and size of informal settlements in sub-Saharan Africa.",
     url:"https://www.millionneighborhoods.africa",
-    image:"https://millionneighborhoods.africa/public/hi-res-card.svg"
+    image:"https://millionneighborhoods.africa/public/card-image.png"
   }
 }
 
