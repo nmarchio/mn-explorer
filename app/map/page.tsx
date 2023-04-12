@@ -59,9 +59,9 @@ const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 const TRANSITION_ZOOM_THRESHOLD = 11;
 
 const REGION_URL =
-  "https://d386ho3t0q1oea.cloudfront.net/regiontile2-2-11.pmtiles";
+  "https://d386ho3t0q1oea.cloudfront.net/regiontile-2-11.pmtiles";
 const BLOCK_URL =
-  "https://d386ho3t0q1oea.cloudfront.net/blocktile2-10-13.pmtiles";
+  "https://d386ho3t0q1oea.cloudfront.net/blocktile-10-13.pmtiles";
 
 const loadOptions = {
   pmt: {
