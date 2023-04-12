@@ -13,14 +13,14 @@ export const metadata = {
     image: "https://millionneighborhoods.africa/public/card-image.png",
     type:"website",
     title:"Mapping development down to the street block",
-    description:"Interactive maps reveals the location and size of informal settlements in sub-Saharan Africa."
+    description:"Explore an interactive map of population and areas that lack access to street networks in sub-Saharan Africa."
   },
   twitter: {
     card:"summary_large_image",
     site:"@miurbanchicago",
     creator:"@miurbanchicago",
     title:"Mapping development down to the street block",
-    description:"Interactive maps reveals the location and size of informal settlements in sub-Saharan Africa.",
+    description:"Explore an interactive map of population and areas that lack access to street networks in sub-Saharan Africa.",
     url:"https://www.millionneighborhoods.africa",
     image:"https://millionneighborhoods.africa/public/card-image.png"
   }
