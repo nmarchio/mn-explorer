@@ -2,9 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-body, * {
-  margin:0;
-  padding:0;
+body,
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -12,7 +13,7 @@ body, * {
   position: fixed;
   pointer-events: none;
   background-color: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(0,0,0,0.25);
+  border: 1px solid rgba(0, 0, 0, 0.25);
   font-weight: bold;
 }
 
@@ -20,21 +21,21 @@ body, * {
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
-  max-width:20rem;
+  max-width: 20rem;
 }
 .tooltip-table tr td {
   word-break: break-word;
 }
 .tooltip-table tr {
-  border-bottom: 1px solid rgba(0,0,0,0.25);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
 }
 .tooltip-table tr td:nth-child(1) {
   max-width: 17ch;
-  padding:0.25rem 0 0.25rem 0.5rem;
+  padding: 0.25rem 0 0.25rem 0.5rem;
 }
 
 .tooltip-table tr td:nth-child(2) {
-  padding:0.25rem 0.5rem 0.25rem 0;
+  padding: 0.25rem 0.5rem 0.25rem 0;
 }
 
 /* :root {
@@ -144,3 +145,42 @@ a {
     color-scheme: dark;
   }
 } */
+
+.mdx-styles h1,
+.mdx-styles h2,
+.mdx-styles h3,
+.mdx-styles h4,
+.mdx-styles h5,
+.mdx-styles h6 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+.mdx-styles h2 {
+  font-size: 1.5rem;
+}
+.mdx-styles h3 {
+  font-size: 1.25rem;
+}
+.mdx-styles h4 {
+  font-size: 1rem;
+}
+.mdx-styles h5 {
+  font-size: 0.875rem;
+}
+.mdx-styles h6 {
+  font-size: 0.75rem;
+}
+
+.mdx-styles ul, .mdx-styles ol {
+  padding-left: 1rem;
+  list-style: initial;
+}
+
+.mdx-styles ol {
+  list-style: number;
+}
+
+.mdx-styles a {
+  color: #0071ff;
+  text-decoration: underline;
+}

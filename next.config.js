@@ -1,3 +1,5 @@
+const withMDX = require('@next/mdx')();
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
@@ -14,3 +16,6 @@ const nextConfig = {
 }
 
 module.exports = nextConfig
+
+
+module.exports = withMDX(nextConfig);
