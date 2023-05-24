@@ -283,6 +283,12 @@ export default function App() {
 
         <div className="absolute bottom-8 right-0 p-2 w-28 bg-white bg-opacity-90 md:p-4 md:w-auto">
           <h3 className="mb-2 font-bold">{currSchema.name}</h3>
+          <div className="relative group">
+            <button className="btn btn-sm btn-ghost">info</button>
+            <div className="opacity-0 bg-white text-sm rounded-lg px-2 py-1 absolute top-0 right-0 w-[200px] shadow-md transform group-hover:opacity-100 transition-all duration-300" style={{pointerEvents: "none"}}>
+              {currSchema.description}
+            </div>
+          </div>
           <ColorRange
             // @ts-ignore
             colorScale={currSchema.colorMapping}

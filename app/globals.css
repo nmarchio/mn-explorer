@@ -145,6 +145,9 @@ a {
     color-scheme: dark;
   }
 } */
+.group:hover .group-hover\:translate-y-0 {
+  transform: translateY(0);
+}
 
 .mdx-styles h1,
 .mdx-styles h2,
@@ -171,7 +174,8 @@ a {
   font-size: 0.75rem;
 }
 
-.mdx-styles ul, .mdx-styles ol {
+.mdx-styles ul,
+.mdx-styles ol {
   padding-left: 1rem;
   list-style: initial;
 }
