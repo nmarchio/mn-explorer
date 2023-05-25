@@ -34,7 +34,7 @@ export default async function Download() {
           University of Chicago's Mansueto Institute for Urban Innovation. 
           URL: https://www.millionneighborhoods.africa</pre>
         <p>A complete data dictionary is available <a href="https://docs.google.com/spreadsheets/d/1S35EhQcmmHtzuPUkiVllzQOVtpdjkdsHpqvMTJtagi8/edit?usp=sharing">here</a>.</p>
-        <p>For any questions or inquiries, please reach out to <!--  reportphishing@apwg.org --> nmarchio at <!--  reportphishing@apwg.org -->uchicag<!--  reportphishing@apwg.org -->o dot edu</p>
+        <p>For any questions or inquiries, please reach out to nmarchio at uchicago dot edu</p>
       </div>
       <span className="divider" />
       <div className="flex flex-col mb-4 md:flex-row">
