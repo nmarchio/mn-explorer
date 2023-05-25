@@ -41,7 +41,7 @@ export default async function Download() {
           </p>
           <DownloadGroup
             fileTypes={fileTypes}
-            cdnBase={cdnBase}
+            cdnBase={cdnBaseUrl}
             filename="million_neighborhoods_africa_data"
           />
         </div>
@@ -50,7 +50,7 @@ export default async function Download() {
           <CountryDownloader
             countryList={countryList}
             fileTypes={fileTypes}
-            cdnBase={cdnBase}
+            cdnBase={cdnBaseUrl}
           />
         </div>
       </div>
