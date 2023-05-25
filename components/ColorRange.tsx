@@ -1,7 +1,7 @@
 import React from "react";
 
 export const ColorRange: React.FC<{
-  colorScale: Array<{ color: number[]; value: string }>;
+  colorScale: Array<{ color: number[]; value: string; label?: string }>;
   rangeType: string;
   labelsToInclude: string[];
 }> = ({ colorScale, rangeType, labelsToInclude }) => {
@@ -21,7 +21,7 @@ export const ColorRange: React.FC<{
     <div className="flex flex-row text-xs">
       <div className="flex flex-col justify-between items-start">
         {rangeType === undefined &&
-          colorScale.map(({ color, value }, i) => (
+          colorScale.map(({ color, value, label }, i) => (
             <div
               key={i}
               className="flex flex-row justify-between items-center text-left"
@@ -35,7 +35,7 @@ export const ColorRange: React.FC<{
               <p key={i} className="ml-2 my-0">
                 {!labelsToInclude?.length ||
                 labelsToInclude?.includes(`${value}`) ? (
-                  value
+                  label || value
                 ) : (
                   <EmptyCharacter />
                 )}
@@ -43,7 +43,7 @@ export const ColorRange: React.FC<{
             </div>
           ))}
         {rangeType === "binned" &&
-          colorScale.map(({ color, value }, i) => (
+          colorScale.map(({ color, value, label }, i) => (
             <div
               key={i}
               className="flex flex-row justify-between items-center text-left"
@@ -53,11 +53,17 @@ export const ColorRange: React.FC<{
                 style={{ background: `rgb(${color.join(",")}` }}
               />
               <p>
-                {i === 0 && `< ${value}`}
-                {i === colorScale.length - 1 && `> ${value}`}
-                {i !== 0 &&
-                  i !== colorScale.length - 1 &&
-                  `${value} - ${colorScale[i + 1].value}`}
+                {label ? (
+                  label
+                ) : (
+                  <>
+                    {i === 0 && `< ${value}`}
+                    {i === colorScale.length - 1 && `> ${value}`}
+                    {i !== 0 &&
+                      i !== colorScale.length - 1 &&
+                      `${value} - ${colorScale[i + 1].value}`}
+                  </>
+                )}
               </p>
             </div>
           ))}
@@ -66,7 +72,7 @@ export const ColorRange: React.FC<{
           <div className="flex flex-row">
             <div className="w-4 h-full" style={{ background: gradient }}></div>
             <div>
-              {colorScale.map(({ value, color }, i) => (
+              {colorScale.map(({ value, color, label }, i) => (
                 <div
                   key={i}
                   className="flex flex-row justify-between items-center text-left ml-1"
@@ -74,7 +80,7 @@ export const ColorRange: React.FC<{
                   <p>
                     {!labelsToInclude?.length ||
                     labelsToInclude?.includes(`${value}`) ? (
-                      value
+                      label || value
                     ) : (
                       <EmptyCharacter />
                     )}

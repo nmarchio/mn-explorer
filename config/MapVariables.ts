@@ -1,21 +1,22 @@
 const kComplexitySchema: MapVariableSchema = {
   name: "Block street access",
-  description: "Measures the number of building parcels between the least accessible structure and the street network. This metric is called block complexity.",
+  description:
+    "Measures the number of building parcels between the least accessible structure and the street network. This metric is called block complexity.",
   columnAccessors: {
     region: "k_ls_labels",
     blocks: "k_labels",
   },
   colorMapping: [
     { value: "1", color: "#414141" },
-    { value: "2 (high)", color: "#777777" },
+    { value: "2", label: "2 (high)", color: "#777777" },
     { value: "3", color: "#93328E" },
-    { value: "4 (moderate)", color: "#B83A85" },
+    { value: "4", label: "4 (moderate)", color: "#B83A85" },
     { value: "5", color: "#D9477A" },
-    { value: "6 (low)", color: "#F25D6D" },
+    { value: "6", label: "6 (low)", color: "#F25D6D" },
     { value: "7", color: "#FB7962" },
     { value: "8", color: "#FF9859" },
     { value: "9", color: "#FFB857" },
-    { value: "10+ (very low)", color: "#FCD860" },
+    { value: "10+", label: "10+ (very low)", color: "#FCD860" },
     { value: "Off-network", color: "#F9F871" },
   ],
 };
@@ -37,12 +38,13 @@ const BlockTypeSchema: MapVariableSchema = {
 
 const PopulationSchema: MapVariableSchema = {
   name: "Population Density",
-  description: "Population per hectare (based on LandScan 2020, adjusted to UN statistics).",
+  description:
+    "Population per hectare (based on LandScan 2020, adjusted to UN statistics).",
   columnAccessors: {
     region: "landscan_population_un_density_hectare",
     blocks: "landscan_population_un_density_hectare",
   },
-  legendLabels: ["1", "10", "100", "1000"],
+  legendLabels: ["1", "10", "100", "1,000"],
   rangeType: "unclassified",
   colorMapping: [
     { value: 1, color: "#440154" },
@@ -69,9 +71,9 @@ const variables: Array<MapVariableSchema> = [
 export const mapVariables = variables.map((schema) => ({
   ...schema,
   colorMapping: schema.colorMapping.map(
-    ({ color, value }) => ({
-      value: value,
+    ({ color, ...rest }) => ({
       color: convertHexToRgb(color),
+      ...rest
     }),
     {}
   ),
@@ -101,5 +103,6 @@ export type MapVariableSchema = {
   colorMapping: Array<{
     color: string;
     value: string | number;
+    label?: string;
   }>;
 };
