@@ -9,12 +9,6 @@ export default function Navigation() {
       <div className="flex-none hidden md:block">
         <ul className="menu menu-horizontal px-1">
           <li>
-
-      <div className="tooltip" data-tip={'asdfasdfasdf '}>
-            <button className="btn">Hover me</button>
-          </div>
-          </li>
-          <li>
             <a href="/">Map</a>
           </li>
           <li>
