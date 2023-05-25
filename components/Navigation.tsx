@@ -9,12 +9,6 @@ export default function Navigation() {
       <div className="flex-none hidden md:block">
         <ul className="menu menu-horizontal px-1">
           <li>
-
-      <div className="tooltip" data-tip={'asdfasdfasdf '}>
-            <button className="btn">Hover me</button>
-          </div>
-          </li>
-          {/* <li>
             <a href="/">Map</a>
           </li>
           <li>
@@ -22,7 +16,7 @@ export default function Navigation() {
           </li>
           <li>
             <a href="/download">Download</a>
-          </li> */}
+          </li>
         </ul>
       </div>
       <div className="dropdown dropdown-end md:hidden">
@@ -35,9 +29,9 @@ export default function Navigation() {
           tabIndex={0}
           className="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52"
         >
-          {/* <li>
+          <li>
             <a href="/map">Map</a>
-          </li> */}
+          </li> 
           <li>
             <a href="/about">About</a>
           </li>

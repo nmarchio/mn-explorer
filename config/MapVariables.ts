@@ -1,21 +1,21 @@
 const kComplexitySchema: MapVariableSchema = {
-  name: "Block Complexity",
-  description: "Distance from network sorta kinda, more here...",
+  name: "Block street access",
+  description: "Measures the number of building parcels between the least accessible structure and the street network. This metric is called block complexity.",
   columnAccessors: {
     region: "k_ls_labels",
     blocks: "k_labels",
   },
   colorMapping: [
     { value: "1", color: "#414141" },
-    { value: "2", color: "#777777" },
+    { value: "2 (high)", color: "#777777" },
     { value: "3", color: "#93328E" },
-    { value: "4", color: "#B83A85" },
+    { value: "4 (moderate)", color: "#B83A85" },
     { value: "5", color: "#D9477A" },
-    { value: "6", color: "#F25D6D" },
+    { value: "6 (low)", color: "#F25D6D" },
     { value: "7", color: "#FB7962" },
     { value: "8", color: "#FF9859" },
     { value: "9", color: "#FFB857" },
-    { value: "10+", color: "#FCD860" },
+    { value: "10+ (very low)", color: "#FCD860" },
     { value: "Off-network", color: "#F9F871" },
   ],
 };
@@ -23,7 +23,7 @@ const kComplexitySchema: MapVariableSchema = {
 const BlockTypeSchema: MapVariableSchema = {
   name: "Block Type",
   description:
-    "The typography of the block as urban, peri-urban, or non-urban.",
+    "Classification of street block as urban, peri-urban, or non-urban.",
   columnAccessors: {
     region: "area_type",
     blocks: "area_type",
@@ -37,7 +37,7 @@ const BlockTypeSchema: MapVariableSchema = {
 
 const PopulationSchema: MapVariableSchema = {
   name: "Population Density",
-  description: "Population density of the block.",
+  description: "Population per hectare (based on LandScan 2020, adjusted to UN statistics).",
   columnAccessors: {
     region: "landscan_population_un_density_hectare",
     blocks: "landscan_population_un_density_hectare",
