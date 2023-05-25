@@ -4,7 +4,7 @@ import { DownloadGroup } from "@/components/DownloadGroup";
 const cdnBaseUrl = "dsbprylw7ncuq.cloudfront.net";
 
 const getIndexMetadata = async () => {
-  const indexJson = await fetch(`{${cdnBaseUrl}.net/_file_index.json`)
+  const indexJson = await fetch(`{${cdnBaseUrl}/_file_index.json`)
   // const indexJson = await indexJson.json()
   // return indexJson
   const {
