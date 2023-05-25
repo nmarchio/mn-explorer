@@ -1,58 +1,28 @@
 import { CountryDownloader } from "@/components/CountryDownloader";
 import { DownloadGroup } from "@/components/DownloadGroup";
 
-const getCountryList = async () => {
-  // const countryList = await fetch("cdn.net/index_of_countries.json")
-  // const countryListJson = await countryList.json()
-  // return countryListJson
-  return [
-    {
-      name: "Kenya",
-      filepath: "kenya",
-    },
-    {
-      name: "South Africa",
-      filepath: "south_africa",
-    },
-  ];
+const cdnBaseUrl = "dsbprylw7ncuq.cloudfront.net";
+
+const getIndexMetadata = async () => {
+  const indexJson = await fetch(`{${cdnBaseUrl}.net/_file_index.json`)
+  // const indexJson = await indexJson.json()
+  // return indexJson
+  const {
+    countryList,
+    fileTypes
+  } = await indexJson.json()
+
+  return {
+    countryList,
+    fileTypes
+  }
 };
 
-// hard coded implementation
-// const countryList = [
-//   {
-//     name: "Kenya",
-//     filepath: "kenya",
-//   },
-//   {
-//     name: "South Africa",
-//     filepath: "south_africa",
-//   },
-// ];
-
-const fileTypes = [
-  {
-    name: "Shapefile",
-    extension: "zip",
-  },
-  {
-    name: "Parquet",
-    extension: "parquet",
-  },
-  {
-    name: "CSV / Excel",
-    extension: "csv",
-  },
-  {
-    name: "GeoJSON",
-    extension: "geojson",
-  },
-];
-
-const cdnBase = "https://cloudfront1234.net";
-
 export default async function Download() {
-  // dynamic fetch
-  const countryList = await getCountryList();
+  const {
+    countryList,
+    fileTypes
+  } = await getIndexMetadata();
   return (
     <main className="px-6">
       <div className="flex flex-col gap-4">
