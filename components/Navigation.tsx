@@ -14,7 +14,7 @@ export default function Navigation() {
             <button className="btn">Hover me</button>
           </div>
           </li>
-          {/* <li>
+          {<li>
             <a href="/">Map</a>
           </li>
           <li>
@@ -22,7 +22,7 @@ export default function Navigation() {
           </li>
           <li>
             <a href="/download">Download</a>
-          </li> */}
+          </li>}
         </ul>
       </div>
       <div className="dropdown dropdown-end md:hidden">
