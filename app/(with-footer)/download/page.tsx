@@ -31,7 +31,7 @@ export default async function Download() {
           gridded population data from ORNL LandScan 2020 (1km²) and WorldPop 2020 (constrained, 100m²), GHSL Urban Centre database 2015 and OECD/SWAC Africapolis database 2020.</p>
         <p>Please use the following citation:</p>
         <pre>Bettencourt, Luís M. A.; Marchio, Nicholas. (2023). Million Neighborhoods Africa Database. 
-          University of Chicago's Mansueto Institute for Urban Innovation. 
+          University of Chicago&#39;s Mansueto Institute for Urban Innovation. 
           URL: https://www.millionneighborhoods.africa</pre>
         <p>A complete data dictionary is available <a href="https://docs.google.com/spreadsheets/d/1S35EhQcmmHtzuPUkiVllzQOVtpdjkdsHpqvMTJtagi8/edit?usp=sharing">here</a>.</p>
         <p>For any questions or inquiries, please reach out to nmarchio at uchicago dot edu</p>
