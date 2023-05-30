@@ -15,10 +15,6 @@ export default function Footer() {
             University of Chicago <br />
             All rights reserved
           </p>
-
-          <p className="max-w-[50ch] mt-4">
-            Data engineering and interactive support provided by Open Spatial Lab at the Data Science Institute at the University of Chicago
-          </p>
         </p>
       </div>
       <div>
@@ -34,12 +30,6 @@ export default function Footer() {
         <a className="link link-hover" href="https://miurban.uchicago.edu/" target="_blank" rel="noopener noreferer">Mansueto Institute for Urban Innovation</a>
         <a className="link link-hover" href="https://openspatial.io/" target="_blank" rel="noopener noreferer">Open Spatial Lab @ DSI</a>
         <a className="link link-hover" href="https://rcc.uchicago.edu/" target="_blank" rel="noopener noreferer">Research Computing Center</a>
-      </div>
-      <div>
-        <span className="footer-title">Legal</span>
-        <a className="link link-hover">Terms of use</a>
-        <a className="link link-hover">Privacy policy</a>
-        <a className="link link-hover">Cookie policy</a>
       </div>
     </footer>
   );
