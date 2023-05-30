@@ -157,7 +157,17 @@ a {
 .mdx-styles h6 {
   font-size: 2rem;
   font-weight: bold;
+  display: block;
+  margin: 1rem 0;
 }
+
+.mdx-styles ul,
+.mdx-styles ol,
+.mdx-styles p {
+  display: block;
+  margin: 0 0 .75rem 0;
+}
+
 .mdx-styles h2 {
   font-size: 1.5rem;
 }
@@ -176,7 +186,7 @@ a {
 
 .mdx-styles ul,
 .mdx-styles ol {
-  padding-left: 1rem;
+  padding-left: 2rem;
   list-style: initial;
 }
 
