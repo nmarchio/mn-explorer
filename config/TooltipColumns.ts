@@ -18,7 +18,7 @@ export const regionTooltipColumns: Array<TooltipSchema> = [
   },
   {
     column: "k_ls_labels",
-    label: "Block complexity",
+    label: "Block street access",
   },
   {
     column: (properties) => ({
@@ -80,7 +80,7 @@ export const blockTooltipColumns: Array<TooltipSchema> = [
   },
   {
     column: "k_labels_detailed",
-    label: "Block complexity",
+    label: "Block street access",
   },
   {
     column: (properties) => ({
