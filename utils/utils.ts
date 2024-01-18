@@ -4,9 +4,9 @@ import {scaleLinear} from "d3-scale";
 import { MapVariableSchema } from "@/config/MapVariables";
 
 export const INITIAL_VIEW_STATE = {
-  longitude: 15,
-  latitude: -5.05,
-  zoom: 2.96,
+  longitude: 0,
+  latitude: 0,
+  zoom: 0,
   pitch: 0,
   bearing: 0,
 };
