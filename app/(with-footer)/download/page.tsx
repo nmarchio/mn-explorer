@@ -31,10 +31,10 @@ export default async function Download() {
           gridded population data from ORNL LandScan 2020 (1km²) and WorldPop 2020 (constrained, 100m²), GHSL Urban Centre database 2015 and OECD/SWAC Africapolis database 2020.</p>
         <p>Please use the following data citation:</p>
         <p>Bettencourt, Luís M.A.; Marchio, Nicholas. (2023). Million Neighborhoods Africa Database. 
-          Harvard Dataverse. <a href="https://doi.org/doi:10.7910/DVN/DQY54U."><u>https://doi.org/doi:10.7910/DVN/DQY54U</u></a>.</p>
+          Harvard Dataverse. <a href="https://doi.org/doi:10.7910/DVN/DQY54U"><u>https://doi.org/doi:10.7910/DVN/DQY54U</u></a>.</p>
         <p>And access the published article:</p>
         <p>Bettencourt, Luís M.A., Marchio, Nicholas. Infrastructure deficits and informal settlements in sub-Saharan Africa. 
-          Nature (2025). <a href="https://doi.org/10.1038/s41586-025-09465-2."><u>https://doi.org/10.1038/s41586-025-09465-2</u></a>.</p>
+          Nature (2025). <a href="https://doi.org/10.1038/s41586-025-09465-2"><u>https://doi.org/10.1038/s41586-025-09465-2</u></a>.</p>
         <p>A complete data dictionary is available <a href="https://docs.google.com/spreadsheets/d/1S35EhQcmmHtzuPUkiVllzQOVtpdjkdsHpqvMTJtagi8/edit?usp=sharing"><b><u>here</u></b></a>.</p>
         <p>For any questions or inquiries, please reach out to nmarchio at uchicago.edu</p>
       </div>
