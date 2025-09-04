@@ -29,9 +29,12 @@ export default async function Download() {
         <p>The database incorporates multiple sources, including: OpenStreetMap accessed via the Geofabrik download server, 
           DigitizeAfrica building footprints from Maxar Technologies Inc and Ecopia.AI, coastline data from the Daylight Map Distribution, administrative areas from GADM database 4.1, 
           gridded population data from ORNL LandScan 2020 (1km²) and WorldPop 2020 (constrained, 100m²), GHSL Urban Centre database 2015 and OECD/SWAC Africapolis database 2020.</p>
-        <p>Please use the following citation:</p>
-        <p>Bettencourt, Luís M. A.; Marchio, Nicholas. (2023). Million Neighborhoods Africa Database. 
-          University of Chicago&#39;s Mansueto Institute for Urban Innovation. URL: <a href="https://www.millionneighborhoods.africa"><u>https://www.millionneighborhoods.africa</u></a>.</p>
+        <p>Please use the following data citation:</p>
+        <p>Bettencourt, Luís M.A.; Marchio, Nicholas. (2023). Million Neighborhoods Africa Database. 
+          Harvard Dataverse. <a href="https://doi.org/doi:10.7910/DVN/DQY54U."><u>https://doi.org/doi:10.7910/DVN/DQY54U</u></a>.</p>
+        <p>And access the published article:</p>
+        <p>Bettencourt, Luís M.A., Marchio, Nicholas. Infrastructure deficits and informal settlements in sub-Saharan Africa. 
+          Nature (2025). <a href="https://doi.org/10.1038/s41586-025-09465-2."><u>https://doi.org/10.1038/s41586-025-09465-2</u></a>.</p>
         <p>A complete data dictionary is available <a href="https://docs.google.com/spreadsheets/d/1S35EhQcmmHtzuPUkiVllzQOVtpdjkdsHpqvMTJtagi8/edit?usp=sharing"><b><u>here</u></b></a>.</p>
         <p>For any questions or inquiries, please reach out to nmarchio at uchicago.edu</p>
       </div>
